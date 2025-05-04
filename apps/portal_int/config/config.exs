@@ -29,7 +29,8 @@ config :portal_int, PortalIntWeb.Endpoint,
     layout: false
   ],
   pubsub_server: PortalInt.PubSub,
-  live_view: [signing_salt: "REgUW0OX"]
+  live_view: [signing_salt: "REgUW0OX"],
+  server: true
 
 # Configures the mailer
 #
@@ -46,8 +47,8 @@ config :esbuild,
   portal_int: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
-    cd: Path.expand("../apps/portal_int/assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../../../deps", __DIR__)}
   ]
 
 # Configure tailwind (the version is required)
@@ -59,7 +60,7 @@ config :tailwind,
       --input=css/app.css
       --output=../priv/static/assets/app.css
     ),
-    cd: Path.expand("../apps/portal_int/assets", __DIR__)
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configures Elixir's Logger
