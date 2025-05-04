@@ -23,7 +23,7 @@ defmodule PortalInt.MixProject do
   def application do
     [
       mod: {PortalInt.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
