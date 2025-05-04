@@ -5,10 +5,10 @@ defmodule PortalExt.MixProject do
     [
       app: :portal_ext,
       version: "0.1.0",
-      build_path: "../../_build",
-      config_path: "../../config/config.exs",
-      deps_path: "../../deps",
-      lockfile: "../../mix.lock",
+      build_path: "./_build",
+      config_path: "./config/config.exs",
+      deps_path: "./deps",
+      lockfile: "./mix.lock",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -23,7 +23,7 @@ defmodule PortalExt.MixProject do
   def application do
     [
       mod: {PortalExt.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -36,6 +36,8 @@ defmodule PortalExt.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:gen_lib, in_umbrella: true},
+      {:gen_ui, in_umbrella: true},
       {:phoenix, "~> 1.7.21"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.10"},

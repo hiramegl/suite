@@ -7,4 +7,10 @@ defmodule PortalExtWeb.PageHTML do
   use PortalExtWeb, :html
 
   embed_templates "page_html/*"
+
+  def hello_fun(assigns) do
+    ~H"""
+    <h1>GenUI: {GenUi.hello} - GenLib: {GenLib.hello}</h1>
+    """
+  end
 end
