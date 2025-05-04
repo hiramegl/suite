@@ -7,4 +7,10 @@ defmodule PortalIntWeb.PageHTML do
   use PortalIntWeb, :html
 
   embed_templates "page_html/*"
+
+  def my_fun(assigns) do
+    ~H"""
+    <h1>{GenUi.hello} - {GenLib.hello}</h1>
+    """
+  end
 end
