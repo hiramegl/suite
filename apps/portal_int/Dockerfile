@@ -16,6 +16,6 @@ ENV POSTGRES_PASSWORD=postgres
 #USER "${USER}"
 #COPY --from=build --chown="${USER}":"${USER}" /_build/dev/rel/portal_int ./
 WORKDIR "/home/app"
-COPY --from=build /_build/dev/rel/portal_int ./
+COPY --from=build /apps/portal_int/_build/dev/rel/portal_int ./
 ENTRYPOINT ["bin/portal_int"]
 CMD ["start"]
