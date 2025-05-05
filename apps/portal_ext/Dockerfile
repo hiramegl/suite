@@ -7,7 +7,7 @@ RUN export MIX_ENV=dev && rm -Rf _build && cd apps/portal_ext && mix setup && mi
 # the image that will be actually running
 FROM alpine:3.21.3 AS final
 RUN apk upgrade --no-cache && apk add --no-cache openssl libgcc libstdc++ ncurses-libs git inotify-tools
-EXPOSE 4000
+EXPOSE 5000
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=postgres
 #ENV USER="elixir"

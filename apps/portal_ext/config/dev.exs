@@ -5,7 +5,7 @@ config :portal_ext, PortalExt.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "host.docker.internal", #"localhost"
-  port:     "5600",
+  port:     "7000",
   database: "portal_ext_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
@@ -20,7 +20,7 @@ config :portal_ext, PortalExt.Repo,
 config :portal_ext, PortalExtWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {0, 0, 0, 0}, port: 4100], # [ip: {127, 0, 0, 1}, port: 4100],
+  http: [ip: {0, 0, 0, 0}, port: 5000], # [ip: {127, 0, 0, 1}, port: 5000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
