@@ -20,7 +20,8 @@ config :aku_int, AkuIntWeb.Endpoint,
     layout: false
   ],
   pubsub_server: AkuInt.PubSub,
-  live_view: [signing_salt: "t6JiyjRR"]
+  live_view: [signing_salt: "t6JiyjRR"],
+  server: true
 
 # Configures the mailer
 #
