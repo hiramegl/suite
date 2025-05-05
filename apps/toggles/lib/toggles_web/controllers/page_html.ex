@@ -7,4 +7,10 @@ defmodule TogglesWeb.PageHTML do
   use TogglesWeb, :html
 
   embed_templates "page_html/*"
+
+  def my_fun(assigns) do
+    ~H"""
+    <h1>Toggles, GenUi: {GenUi.hello}, GenLib: {GenLib.hello}</h1>
+    """
+  end
 end

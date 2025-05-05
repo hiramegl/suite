@@ -20,7 +20,8 @@ config :toggles, TogglesWeb.Endpoint,
     layout: false
   ],
   pubsub_server: Toggles.PubSub,
-  live_view: [signing_salt: "VM6E6Gb3"]
+  live_view: [signing_salt: "VM6E6Gb3"],
+  server: true
 
 # Configures the mailer
 #
