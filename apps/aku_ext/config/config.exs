@@ -20,7 +20,8 @@ config :aku_ext, AkuExtWeb.Endpoint,
     layout: false
   ],
   pubsub_server: AkuExt.PubSub,
-  live_view: [signing_salt: "zxvoA5w5"]
+  live_view: [signing_salt: "zxvoA5w5"],
+  server: true
 
 # Configures the mailer
 #
