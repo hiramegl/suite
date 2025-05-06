@@ -4,7 +4,7 @@ import Config
 config :aku_int, AkuInt.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "host.docker.internal", #"localhost"
+  hostname: "localhost", # "host.docker.internal", #
   port:     "6100",
   database: "aku_int_dev",
   stacktrace: true,
@@ -20,7 +20,7 @@ config :aku_int, AkuInt.Repo,
 config :aku_int, AkuIntWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {0, 0, 0, 0}, port: 4100], # [ip: {127, 0, 0, 1}, port: 4100],
+  http: [ip: {127, 0, 0, 1}, port: 4100], # [ip: {0, 0, 0, 0}, port: 4100], #
   check_origin: false,
   code_reloader: true,
   debug_errors: true,

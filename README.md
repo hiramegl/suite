@@ -8,6 +8,11 @@ Once everything is build an running you can access the
 assembled product page via
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
 
+### Fix deps/phoenix_live_reload/lib/phoenix_live_reload/live_reload.ex:
+* line 126: url = config[:url] || endpoint.path("/portal_int/phoenix/live_reload/socket#{suffix(endpoint)}")
+* line 184: path = conn.private.phoenix_endpoint.path("/portal_int/phoenix/live_reload/frame#{suffix(endpoint)}")
+<hr/>
+
 * Log
 <hr/>
 
