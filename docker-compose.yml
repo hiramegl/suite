@@ -3,6 +3,6 @@ services:
     image: nginx:1.28.0-alpine
     volumes:
      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+     - ./nginx/root:/usr/share/nginx/root
     ports:
      - "3000:3000"
-
