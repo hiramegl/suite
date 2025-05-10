@@ -8,6 +8,7 @@ defmodule PortalIntWeb.Router do
     plug :put_root_layout, html: {PortalIntWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :set_content_encoding_identity
   end
 
   pipeline :api do
@@ -41,5 +42,10 @@ defmodule PortalIntWeb.Router do
       live_dashboard "/dashboard", metrics: PortalIntWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  def set_content_encoding_identity(conn, _opts) do
+    conn
+    |> put_resp_header("content-encoding", "identity")
   end
 end

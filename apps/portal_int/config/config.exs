@@ -19,6 +19,8 @@ config :portal_int, PortalIntWeb.Endpoint,
     formats: [html: PortalIntWeb.ErrorHTML, json: PortalIntWeb.ErrorJSON],
     layout: false
   ],
+  http_1_options: [compress: false],
+  http_2_options: [compress: false],
   pubsub_server: PortalInt.PubSub,
   live_view: [signing_salt: "REgUW0OX"],
   server: true
