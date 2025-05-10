@@ -103,3 +103,62 @@ Locations where ports are found:
   * docker run --name portal_ext -p 5000:5000/tcp -t portal_ext:0.1.0
   * docker build -t aku_ext:0.1.0 -f apps/aku_ext/Dockerfile .
   * docker run --name aku_ext -p 5100:5100/tcp -t aku_ext:0.1.0
+
+## Patch deps/phoenix_live_reload/lib/phoenix_live_reload/live_reload.ex
+In order to use a \<root\> tag instead of \<body\> patch live_reload.ex like so:
+
+<pre>
+  def call(%Plug.Conn{path_info: ["phoenix", "live_reload", "frame" | _suffix]} = conn, _) do
+    endpoint = conn.private.phoenix_endpoint
+    config = endpoint.config(:live_reload)
+    url = config[:url] || endpoint.path("/portal_int/phoenix/live_reload/socket#{suffix(endpoint)}")
+    interval = config[:interval] || 100
+    .
+    .
+    .
+
+  -------------------------
+
+  defp body_tag, do: "root"
+
+  defp before_send_inject_reloader(conn, endpoint, config) do
+    register_before_send(conn, fn conn ->
+      if conn.resp_body != nil and html?(conn) do
+        resp_body = IO.iodata_to_binary(conn.resp_body)
+
+        if has_body?(resp_body) and :code.is_loaded(endpoint) do
+          {head, [last]} = Enum.split(String.split(resp_body, "</#{body_tag()}>"), -1)
+          head = Enum.intersperse(head, "</#{body_tag()}>")
+          body = [head, reload_assets_tag(conn, endpoint, config), "</#{body_tag()}>" | last]
+          put_in(conn.resp_body, body)
+        else
+          conn
+        end
+      else
+        conn
+      end
+    end)
+  end
+
+  defp html?(conn) do
+    case get_resp_header(conn, "content-type") do
+      [] -> false
+      [type | _] -> String.starts_with?(type, "text/html")
+    end
+  end
+
+  defp has_body?(resp_body), do: String.contains?(resp_body, "<#{body_tag()}")
+
+  defp reload_assets_tag(conn, endpoint, config) do
+    path = conn.private.phoenix_endpoint.path("/portal_int/phoenix/live_reload/frame#{suffix(endpoint)}")
+</pre>
+
+## VSCodeVIM / Mac
+To enable key-repeating, execute the following in your Terminal, log out and back in, and then restart VS Code:
+<pre>
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false              # For VS Code
+defaults write com.microsoft.VSCodeInsiders ApplePressAndHoldEnabled -bool false      # For VS Code Insider
+defaults write com.vscodium ApplePressAndHoldEnabled -bool false                      # For VS Codium
+defaults write com.microsoft.VSCodeExploration ApplePressAndHoldEnabled -bool false   # For VS Codium Exploration users
+defaults delete -g ApplePressAndHoldEnabled                                           # If necessary, reset global default
+</pre>
