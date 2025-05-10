@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MAIN</title>
+    <script
+      type="text/javascript"
+      src="portal-int-main.js"></script>
+    <script
+      type="text/javascript"
+      src="toggles-main.js"></script>
+  </head>
+  <body>
+    <h1>MAIN</h1>
+    <portal-int-main id="main" size="100"></portal-int-main>
+    <toggles-main id="toggles" size="200"></toggles-main>
+    <script type="text/javascript">
+      // event listener in the window object is the THIRD
+      // listener invoked
+      window.addEventListener(
+        'portal-int-main:user_changed',
+        (e) => console.log('3) In window, rx event:', e));
+
+      // event listener in the dispatcher element is the FIRST
+      // listener invoked
+      document.getElementsByTagName('portal-int-main')[0].
+        addEventListener(
+          'portal-int-main:user_changed',
+          function() {
+              document.getElementsByTagName('toggles-main')[0].
+                on_portal_int_main_user_changed_external("FIRST INVOKED");
+          });
+    </script>
+  </body>
+</html>
