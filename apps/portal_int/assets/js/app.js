@@ -22,8 +22,12 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
-let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {
+let csrfToken = document.
+  getElementById("portal-int-container").
+  shadowRoot.
+  querySelector("meta[name='csrf-token']").
+  getAttribute("content");
+let liveSocket = new LiveSocket("/portal_int/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken}
 })
