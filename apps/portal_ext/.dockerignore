@@ -1,9 +1,0 @@
-# Elixir Artifacts
-/_build/
-/deps/
-/doc/
-/cover/
-/.fetch
-*.ez
-erl_crash.dump
-.DS_Store
