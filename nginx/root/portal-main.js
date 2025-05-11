@@ -1,5 +1,5 @@
 customElements.define(
-  "portal-int-main",
+  "portal-main",
   class extends HTMLElement {
     static observedAttributes = ["color", "size"];
 
@@ -11,7 +11,7 @@ customElements.define(
     }
 
     connectedCallback() {
-      console.log("portal-int-main added to page.");
+      console.log("portal-main added to page.");
       const el = document.createElement('html');
       el.innerHTML = '<head><title>asdf</title></head><body>Quack<button>TRIGGER</button></body>';
       this.my.shadowRoot.appendChild(el);
@@ -32,10 +32,10 @@ customElements.define(
     //             listeners outside of a shadow root. The default is false.
     //             https://developer.mozilla.org/en-US/docs/Web/API/Event/composed
     on_button_click = function(e) {
-      console.log('0) In portal-int-main, rx poiner event, button clicked:', e);
+      console.log('0) In portal-main, rx poiner event, button clicked:', e);
       this.dispatchEvent(
         new CustomEvent(
-          "portal-int-main:user_changed", {
+          "portal-main:user_changed", {
             bubbles:    true,
             cancelable: true,
             composed:   true,
@@ -47,7 +47,7 @@ customElements.define(
     }
 
     disconnectedCallback() {
-      console.log("portal-int-main removed from page.");
+      console.log("portal-main removed from page.");
       this.my.shadowRoot.
         querySelector('button').
         removeEventListener(
@@ -56,15 +56,15 @@ customElements.define(
     }
 
     connectedMoveCallback() {
-      console.log("portal-int-main moved with moveBefore()");
+      console.log("portal-main moved with moveBefore()");
     }
 
     adoptedCallback() {
-      console.log("portal-int-main moved to new page.");
+      console.log("portal-main moved to new page.");
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      console.log(`portal-int-main, Attribute ${name} has changed from ${oldValue} to ${newValue}.`);
+      console.log(`portal-main, Attribute ${name} has changed from ${oldValue} to ${newValue}.`);
     }
 
     get wicked() {

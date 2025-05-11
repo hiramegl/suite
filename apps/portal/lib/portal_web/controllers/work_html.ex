@@ -1,5 +1,5 @@
-defmodule PortalIntWeb.WorkHTML do
-  use PortalIntWeb, :html
+defmodule PortalWeb.WorkHTML do
+  use PortalWeb, :html
 
   embed_templates "work_html/*"
 

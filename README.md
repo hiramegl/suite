@@ -9,8 +9,8 @@ assembled product page via
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
 
 ### Fix deps/phoenix_live_reload/lib/phoenix_live_reload/live_reload.ex:
-* line 126: url = config[:url] || endpoint.path("/portal_int/phoenix/live_reload/socket#{suffix(endpoint)}")
-* line 184: path = conn.private.phoenix_endpoint.path("/portal_int/phoenix/live_reload/frame#{suffix(endpoint)}")
+* line 126: url = config[:url] || endpoint.path("/portal/phoenix/live_reload/socket#{suffix(endpoint)}")
+* line 184: path = conn.private.phoenix_endpoint.path("/portal/phoenix/live_reload/frame#{suffix(endpoint)}")
 <hr/>
 
 * Log
@@ -20,31 +20,26 @@ assembled product page via
 * mix archive.install hex phx_new 1.7.21
 <hr/>
 
-* docker volume create pg_data_portal_int
-* docker run --name pg-portal-int -v pg_data_portal_int:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 6000:5432 postgres:17.4-alpine3.21
-* docker volume create pg_data_toggles
-* docker run --name pg-toggles -v pg_data_toggles:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 6010:5432 postgres:17.4-alpine3.21
-* docker volume create pg_data_aku_int
-* docker run --name pg-aku-int -v pg_data_aku_int:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 6100:5432 postgres:17.4-alpine3.21
+* docker volume create db_data_portal
+* docker run --name db-portal -v db_data_portal:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 6000:5432 postgres:17.4-alpine3.21
+* docker volume create db_data_toggles
+* docker run --name db-toggles -v db_data_toggles:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 6010:5432 postgres:17.4-alpine3.21
+* docker volume create db_data_aku
+* docker run --name db-aku -v db_data_aku:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 6100:5432 postgres:17.4-alpine3.21
 <hr/>
 
-* docker volume create pg_data_portal_ext
-* docker run --name pg-portal-ext -v pg_data_portal_ext:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 7000:5432 postgres:17.4-alpine3.21
-* docker volume create pg_data_aku_ext
-* docker run --name pg-aku-ext -v pg_data_aku_ext:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 7100:5432 postgres:17.4-alpine3.21
-<hr/>
 
-* mix phx.new portal_int
+* mix phx.new portal
 * manually fix all files in "config/" dir
 * mix setup # (deps.get, assets.setup, deps.compile, ecto.create, etc)
 * mix phx.server
 
 ## Compiling and running inside a docker container
-* docker volume create mix_portal_int
-* docker run -it --name portal_int -v mix_portal_int:/root/.mix --volume=".":/suite:rw -w /suite -p 4000:4000/tcp -e MIX_ENV=dev elixir:1.18.3 bash
-  * docker stop portal_int
-  * docker start portal_int
-  * docker exec -it portal_int bash
+* docker volume create mix_portal
+* docker run -it --name portal -v mix_portal:/root/.mix --volume=".":/suite:rw -w /suite -p 4000:4000/tcp -e MIX_ENV=dev elixir:1.18.3 bash
+  * docker stop portal
+  * docker start portal
+  * docker exec -it portal bash
 * apt-get update
 * apt-get -y install inotify-tools
 * apt-get -y install nodejs npm
@@ -52,27 +47,27 @@ assembled product page via
 * mix archive.install hex phx_new 1.7.21
 <hr/>
 
-* cd apps/portal_int
+* cd apps/portal
 * mix setup
 * mix phx.server
 * mix release --overwrite
-* /suite/_build/dev/rel/portal_int/bin/portal_int start
+* /suite/_build/dev/rel/portal/bin/portal start
 
 ## Building an image and running it
 * Add a Dockerfile and .dockerignore file
 * REMOVE ALL BUILD RESOURCES, otherwise docker try to use the files in the host system (MacOS):
-  * rm -rf apps/portal_int/_build/
-  * rm -rf apps/portal_int/deps/
-  * rm -rf apps/portal_int/priv/static/assets
+  * rm -rf apps/portal/_build/
+  * rm -rf apps/portal/deps/
+  * rm -rf apps/portal/priv/static/assets
 * In root directory "suite/":
   * Build image (verbose):
-    * docker build -t portal_int:0.1.0 -f apps/portal_int/Dockerfile --no-cache --progress=plain .
+    * docker build -t portal:0.1.0 -f apps/portal/Dockerfile --no-cache --progress=plain .
   * Build image (not verbose)
-    * docker build -t portal_int:0.1.0 -f apps/portal_int/Dockerfile .
-  * docker run --name web_portal_int -p 4000:4000/tcp -t portal_int:0.1.0
-  * docker stop web_portal_int
-  * docker start web_portal_int
-  * docker exec -it web_portal_int sh
+    * docker build -t portal:0.1.0 -f apps/portal/Dockerfile .
+  * docker run --name web_portal -p 4000:4000/tcp -t portal:0.1.0
+  * docker stop web_portal
+  * docker start web_portal
+  * docker exec -it web_portal sh
 
 ## Ports
 <pre>
@@ -92,17 +87,12 @@ Locations where ports are found:
 </pre>
 
 * In root directory "suite/":
-  * docker build -t portal_int:0.1.0 -f apps/portal_int/Dockerfile .
-  * docker run --name portal_int -p 4000:4000/tcp -t portal_int:0.1.0
+  * docker build -t portal:0.1.0 -f apps/portal/Dockerfile .
+  * docker run --name portal -p 4000:4000/tcp -t portal:0.1.0
   * docker build -t toggles:0.1.0 -f apps/toggles/Dockerfile .
   * docker run --name toggles -p 4010:4010/tcp -t toggles:0.1.0
-  * docker build -t aku_int:0.1.0 -f apps/aku_int/Dockerfile .
-  * docker run --name aku_int -p 4100:4100/tcp -t aku_int:0.1.0
-
-  * docker build -t portal_ext:0.1.0 -f apps/portal_ext/Dockerfile .
-  * docker run --name portal_ext -p 5000:5000/tcp -t portal_ext:0.1.0
-  * docker build -t aku_ext:0.1.0 -f apps/aku_ext/Dockerfile .
-  * docker run --name aku_ext -p 5100:5100/tcp -t aku_ext:0.1.0
+  * docker build -t aku:0.1.0 -f apps/aku/Dockerfile .
+  * docker run --name aku -p 4100:4100/tcp -t aku:0.1.0
 
 ## Patch deps/phoenix_live_reload/lib/phoenix_live_reload/live_reload.ex
 In order to use a \<root\> tag instead of \<body\> patch live_reload.ex like so:
@@ -111,7 +101,7 @@ In order to use a \<root\> tag instead of \<body\> patch live_reload.ex like so:
   def call(%Plug.Conn{path_info: ["phoenix", "live_reload", "frame" | _suffix]} = conn, _) do
     endpoint = conn.private.phoenix_endpoint
     config = endpoint.config(:live_reload)
-    url = config[:url] || endpoint.path("/portal_int/phoenix/live_reload/socket#{suffix(endpoint)}")
+    url = config[:url] || endpoint.path("/portal/phoenix/live_reload/socket#{suffix(endpoint)}")
     interval = config[:interval] || 100
     .
     .
@@ -150,7 +140,7 @@ In order to use a \<root\> tag instead of \<body\> patch live_reload.ex like so:
   defp has_body?(resp_body), do: String.contains?(resp_body, "<#{body_tag()}")
 
   defp reload_assets_tag(conn, endpoint, config) do
-    path = conn.private.phoenix_endpoint.path("/portal_int/phoenix/live_reload/frame#{suffix(endpoint)}")
+    path = conn.private.phoenix_endpoint.path("/portal/phoenix/live_reload/frame#{suffix(endpoint)}")
 </pre>
 
 ## VSCodeVIM / Mac

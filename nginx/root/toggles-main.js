@@ -18,17 +18,17 @@ customElements.define(
 
       // event listener in a subcomponent is the SECOND
       // listener invoked
-      this.my.user_changed_listener = (e) => this.on_portal_int_main_user_changed(e);
+      this.my.user_changed_listener = (e) => this.on_portal_main_user_changed(e);
       window.addEventListener(
-        'portal-int-main:user_changed',
+        'portal-main:user_changed',
         this.my.user_changed_listener);
     }
 
-    on_portal_int_main_user_changed_external = function(e) {
+    on_portal_main_user_changed_external = function(e) {
       console.log('1) In toggles-main, rx event, user changed:', e);
     }
 
-    on_portal_int_main_user_changed = function(e) {
+    on_portal_main_user_changed = function(e) {
       console.log('2) In toggles-main, rx event, user changed:', e);
     }
 
