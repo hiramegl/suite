@@ -1,4 +1,4 @@
-defmodule PortalInt.Application do
+defmodule Portal.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,21 +8,23 @@ defmodule PortalInt.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      PortalIntWeb.Telemetry,
-      PortalInt.Repo,
-      {DNSCluster, query: Application.get_env(:portal_int, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: PortalInt.PubSub},
+      Portal.Count,
+      PortalWeb.Telemetry,
+      Portal.Repo,
+      {DNSCluster, query: Application.get_env(:portal, :dns_cluster_query) || :ignore},
+      {Phoenix.PubSub, name: Portal.PubSub},
       # Start the Finch HTTP client for sending emails
-      {Finch, name: PortalInt.Finch},
-      # Start a worker by calling: PortalInt.Worker.start_link(arg)
-      # {PortalInt.Worker, arg},
+      {Finch, name: Portal.Finch},
+      # Start a worker by calling: Portal.Worker.start_link(arg)
+      # {Portal.Worker, arg},
+      Portal.Presence,
       # Start to serve requests, typically the last entry
-      PortalIntWeb.Endpoint
+      PortalWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: PortalInt.Supervisor]
+    opts = [strategy: :one_for_one, name: Portal.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -30,7 +32,7 @@ defmodule PortalInt.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    PortalIntWeb.Endpoint.config_change(changed, removed)
+    PortalWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

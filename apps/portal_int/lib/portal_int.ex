@@ -1,6 +1,6 @@
-defmodule PortalInt do
+defmodule Portal do
   @moduledoc """
-  PortalInt keeps the contexts that define your domain
+  Portal keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

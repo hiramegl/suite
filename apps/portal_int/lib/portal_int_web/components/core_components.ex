@@ -1,4 +1,4 @@
-defmodule PortalIntWeb.CoreComponents do
+defmodule PortalWeb.CoreComponents do
   @moduledoc """
   Provides core UI components.
 
@@ -15,7 +15,7 @@ defmodule PortalIntWeb.CoreComponents do
   Icons are provided by [heroicons](https://heroicons.com). See `icon/1` for usage.
   """
   use Phoenix.Component
-  use Gettext, backend: PortalIntWeb.Gettext
+  use Gettext, backend: PortalWeb.Gettext
 
   alias Phoenix.LiveView.JS
 
@@ -661,9 +661,9 @@ defmodule PortalIntWeb.CoreComponents do
     # with our gettext backend as first argument. Translations are
     # available in the errors.po file (as we use the "errors" domain).
     if count = opts[:count] do
-      Gettext.dngettext(PortalIntWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(PortalWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(PortalIntWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(PortalWeb.Gettext, "errors", msg, opts)
     end
   end
 

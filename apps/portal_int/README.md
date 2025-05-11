@@ -1,4 +1,4 @@
-# PortalInt
+# Portal
 
 To start your Phoenix server:
 

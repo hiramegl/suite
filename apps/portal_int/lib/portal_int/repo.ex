@@ -1,5 +1,5 @@
-defmodule PortalInt.Repo do
+defmodule Portal.Repo do
   use Ecto.Repo,
-    otp_app: :portal_int,
+    otp_app: :portal,
     adapter: Ecto.Adapters.Postgres
 end

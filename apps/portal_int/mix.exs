@@ -1,9 +1,9 @@
-defmodule PortalInt.MixProject do
+defmodule Portal.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :portal_int,
+      app: :portal,
       version: "0.1.0",
       build_path: "./_build",
       config_path: "./config/config.exs",
@@ -22,7 +22,7 @@ defmodule PortalInt.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {PortalInt.Application, []},
+      mod: {Portal.Application, []},
       extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
@@ -80,10 +80,10 @@ defmodule PortalInt.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind portal_int", "esbuild portal_int"],
+      "assets.build": ["tailwind portal", "esbuild portal"],
       "assets.deploy": [
-        "tailwind portal_int --minify",
-        "esbuild portal_int --minify",
+        "tailwind portal --minify",
+        "esbuild portal --minify",
         "phx.digest"
       ]
     ]

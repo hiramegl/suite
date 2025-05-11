@@ -1,5 +1,5 @@
-defmodule PortalIntWeb.PageControllerTest do
-  use PortalIntWeb.ConnCase
+defmodule PortalWeb.PageControllerTest do
+  use PortalWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

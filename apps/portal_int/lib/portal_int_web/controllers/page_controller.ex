@@ -1,5 +1,5 @@
-defmodule PortalIntWeb.PageController do
-  use PortalIntWeb, :controller
+defmodule PortalWeb.PageController do
+  use PortalWeb, :controller
 
   def home(conn, _params) do
     # The home page is often custom made,

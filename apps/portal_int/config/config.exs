@@ -7,22 +7,22 @@
 # General application configuration
 import Config
 
-config :portal_int,
-  ecto_repos: [PortalInt.Repo],
+config :portal,
+  ecto_repos: [Portal.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
-config :portal_int, PortalIntWeb.Endpoint,
+config :portal, PortalWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: PortalIntWeb.ErrorHTML, json: PortalIntWeb.ErrorJSON],
+    formats: [html: PortalWeb.ErrorHTML, json: PortalWeb.ErrorJSON],
     layout: false
   ],
   http_1_options: [compress: false],
   http_2_options: [compress: false],
-  pubsub_server: PortalInt.PubSub,
-  live_view: [signing_salt: "REgUW0OX"],
+  pubsub_server: Portal.PubSub,
+  live_view: [signing_salt: "Y4jIkJri"],
   server: true
 
 # Configures the mailer
@@ -32,12 +32,12 @@ config :portal_int, PortalIntWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :portal_int, PortalInt.Mailer, adapter: Swoosh.Adapters.Local
+config :portal, Portal.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
-  portal_int: [
+  portal: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
@@ -47,7 +47,7 @@ config :esbuild,
 # Configure tailwind (the version is required)
 config :tailwind,
   version: "3.4.3",
-  portal_int: [
+  portal: [
     args: ~w(
       --config=tailwind.config.js
       --input=css/app.css

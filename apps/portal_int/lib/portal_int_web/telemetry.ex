@@ -1,4 +1,4 @@
-defmodule PortalIntWeb.Telemetry do
+defmodule PortalWeb.Telemetry do
   use Supervisor
   import Telemetry.Metrics
 
@@ -53,23 +53,23 @@ defmodule PortalIntWeb.Telemetry do
       ),
 
       # Database Metrics
-      summary("portal_int.repo.query.total_time",
+      summary("portal.repo.query.total_time",
         unit: {:native, :millisecond},
         description: "The sum of the other measurements"
       ),
-      summary("portal_int.repo.query.decode_time",
+      summary("portal.repo.query.decode_time",
         unit: {:native, :millisecond},
         description: "The time spent decoding the data received from the database"
       ),
-      summary("portal_int.repo.query.query_time",
+      summary("portal.repo.query.query_time",
         unit: {:native, :millisecond},
         description: "The time spent executing the query"
       ),
-      summary("portal_int.repo.query.queue_time",
+      summary("portal.repo.query.queue_time",
         unit: {:native, :millisecond},
         description: "The time spent waiting for a database connection"
       ),
-      summary("portal_int.repo.query.idle_time",
+      summary("portal.repo.query.idle_time",
         unit: {:native, :millisecond},
         description:
           "The time the connection spent waiting before being checked out for the query"
@@ -87,7 +87,7 @@ defmodule PortalIntWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {PortalIntWeb, :count_users, []}
+      # {PortalWeb, :count_users, []}
     ]
   end
 end
