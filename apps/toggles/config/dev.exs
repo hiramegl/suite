@@ -60,7 +60,9 @@ config :toggles, TogglesWeb.Endpoint,
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/toggles_web/(controllers|live|components)/.*(ex|heex)$"
-    ]
+    ],
+    prefix: "/toggles",
+    root_tag: "root-toggles",
   ]
 
 # Enable dev routes for dashboard and mailbox

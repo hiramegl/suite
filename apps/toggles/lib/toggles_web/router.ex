@@ -8,6 +8,7 @@ defmodule TogglesWeb.Router do
     plug :put_root_layout, html: {TogglesWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :set_content_encoding_identity
   end
 
   pipeline :api do
@@ -17,7 +18,9 @@ defmodule TogglesWeb.Router do
   scope "/", TogglesWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", Counter
+    #get "/", HomeController, :home
+    #get "/", WorkController, :work
   end
 
   # Other scopes may use custom stacks.
@@ -40,5 +43,10 @@ defmodule TogglesWeb.Router do
       live_dashboard "/dashboard", metrics: TogglesWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  def set_content_encoding_identity(conn, _opts) do
+    conn
+    |> put_resp_header("content-encoding", "identity")
   end
 end

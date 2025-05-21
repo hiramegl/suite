@@ -8,6 +8,7 @@ defmodule Toggles.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      Toggles.Count,
       TogglesWeb.Telemetry,
       Toggles.Repo,
       {DNSCluster, query: Application.get_env(:toggles, :dns_cluster_query) || :ignore},
@@ -16,6 +17,7 @@ defmodule Toggles.Application do
       {Finch, name: Toggles.Finch},
       # Start a worker by calling: Toggles.Worker.start_link(arg)
       # {Toggles.Worker, arg},
+      Toggles.Presence,
       # Start to serve requests, typically the last entry
       TogglesWeb.Endpoint
     ]
