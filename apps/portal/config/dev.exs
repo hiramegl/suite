@@ -60,7 +60,9 @@ config :portal, PortalWeb.Endpoint,
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/portal_web/(controllers|live|components)/.*(ex|heex)$"
-    ]
+    ],
+    prefix: "/portal",
+    root_tag: "root-portal",
   ]
 
 # Enable dev routes for dashboard and mailbox

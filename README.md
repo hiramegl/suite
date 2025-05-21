@@ -152,3 +152,9 @@ defaults write com.vscodium ApplePressAndHoldEnabled -bool false                
 defaults write com.microsoft.VSCodeExploration ApplePressAndHoldEnabled -bool false   # For VS Codium Exploration users
 defaults delete -g ApplePressAndHoldEnabled                                           # If necessary, reset global default
 </pre>
+
+## In phoenix_live_view
+
+* npm run setup
+* mix release
+* mix assets.build
