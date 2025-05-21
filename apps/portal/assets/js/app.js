@@ -22,13 +22,14 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
-const containerTag = "portal-container"
+const appName = "portal"
+const containerTag = `${appName}-container`
 let csrfToken = document.
   getElementById(containerTag).
   shadowRoot.
   querySelector("meta[name='csrf-token']").
   getAttribute("content")
-let liveSocket = new LiveSocket("/portal/live", Socket, {
+let liveSocket = new LiveSocket(`/${appName}/live`, Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
   rootSelector: containerTag,
