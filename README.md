@@ -151,6 +151,8 @@ defaults write com.microsoft.VSCodeInsiders ApplePressAndHoldEnabled -bool false
 defaults write com.vscodium ApplePressAndHoldEnabled -bool false                      # For VS Codium
 defaults write com.microsoft.VSCodeExploration ApplePressAndHoldEnabled -bool false   # For VS Codium Exploration users
 defaults delete -g ApplePressAndHoldEnabled                                           # If necessary, reset global default
+
+IO.puts("*******> socket: #{socket |> inspect(pretty: true, limit:  :infinity, width:  120)}")
 </pre>
 
 ## In phoenix_live_view

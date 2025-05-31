@@ -8,7 +8,8 @@ defmodule PortalWeb.Endpoint do
     store: :cookie,
     key: "_portal_key",
     signing_salt: "avnufz7A",
-    same_site: "Lax"
+    same_site: "Lax",
+    secure: true,
   ]
 
   socket "/live", Phoenix.LiveView.Socket,

@@ -8,7 +8,8 @@ defmodule TogglesWeb.Endpoint do
     store: :cookie,
     key: "_toggles_key",
     signing_salt: "wPYl0hfl",
-    same_site: "Lax"
+    same_site: "Lax",
+    secure: true,
   ]
 
   socket "/live", Phoenix.LiveView.Socket,

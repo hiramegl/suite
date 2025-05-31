@@ -18,9 +18,10 @@ defmodule TogglesWeb.Router do
   scope "/", TogglesWeb do
     pipe_through :browser
 
+    get "/init", InitController, :init
+
     live "/", Counter
     #get "/", HomeController, :home
-    #get "/", WorkController, :work
   end
 
   # Other scopes may use custom stacks.

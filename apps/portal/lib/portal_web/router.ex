@@ -18,10 +18,11 @@ defmodule PortalWeb.Router do
   scope "/", PortalWeb do
     pipe_through :browser
 
-    get "/work", WorkController, :work
+    get "/init", InitController, :init
 
     live "/", Counter
     #get "/", HomeController, :home
+    #get "/", WorkController, :work
   end
 
   # Other scopes may use custom stacks.
