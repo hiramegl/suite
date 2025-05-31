@@ -9,7 +9,7 @@ defmodule TogglesWeb.Endpoint do
     key: "_toggles_key",
     signing_salt: "wPYl0hfl",
     same_site: "Lax",
-    secure: true,
+    #secure: true, # safari does not allow secure cookies in localhost
   ]
 
   socket "/live", Phoenix.LiveView.Socket,

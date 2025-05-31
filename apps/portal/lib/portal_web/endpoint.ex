@@ -9,7 +9,7 @@ defmodule PortalWeb.Endpoint do
     key: "_portal_key",
     signing_salt: "avnufz7A",
     same_site: "Lax",
-    secure: true,
+    #secure: true, # safari does not allow secure cookies in localhost
   ]
 
   socket "/live", Phoenix.LiveView.Socket,
