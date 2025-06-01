@@ -4,7 +4,8 @@ import Config
 config :aku, Aku.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "localhost",
+  hostname: "localhost", # "host.docker.internal", #
+  port:     "6100",
   database: "aku_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
@@ -19,7 +20,7 @@ config :aku, Aku.Repo,
 config :aku, AkuWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  http: [ip: {127, 0, 0, 1}, port: 4100], # [ip: {0, 0, 0, 0}, port: 4100], #
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
@@ -59,7 +60,9 @@ config :aku, AkuWeb.Endpoint,
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/aku_web/(controllers|live|components)/.*(ex|heex)$"
-    ]
+    ],
+    prefix: "/aku",
+    root_tag: "root-aku",
   ]
 
 # Enable dev routes for dashboard and mailbox

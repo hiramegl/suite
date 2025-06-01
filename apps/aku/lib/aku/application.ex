@@ -8,6 +8,7 @@ defmodule Aku.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      Aku.Count,
       AkuWeb.Telemetry,
       Aku.Repo,
       {DNSCluster, query: Application.get_env(:aku, :dns_cluster_query) || :ignore},
@@ -16,6 +17,7 @@ defmodule Aku.Application do
       {Finch, name: Aku.Finch},
       # Start a worker by calling: Aku.Worker.start_link(arg)
       # {Aku.Worker, arg},
+      Aku.Presence,
       # Start to serve requests, typically the last entry
       AkuWeb.Endpoint
     ]

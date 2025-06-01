@@ -8,7 +8,8 @@ defmodule AkuWeb.Endpoint do
     store: :cookie,
     key: "_aku_key",
     signing_salt: "zAAor5er",
-    same_site: "Lax"
+    same_site: "Lax",
+    #secure: true, # safari does not allow secure cookies in localhost
   ]
 
   socket "/live", Phoenix.LiveView.Socket,

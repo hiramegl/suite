@@ -5,6 +5,10 @@ defmodule Aku.MixProject do
     [
       app: :aku,
       version: "0.1.0",
+      build_path: "./_build",
+      config_path: "./config/config.exs",
+      deps_path: "./deps",
+      lockfile: "./mix.lock",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -19,7 +23,7 @@ defmodule Aku.MixProject do
   def application do
     [
       mod: {Aku.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -32,13 +36,22 @@ defmodule Aku.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:gen_lib, in_umbrella: true},
+      {:gen_ui, in_umbrella: true},
       {:phoenix, "~> 1.7.21"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.1"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 1.0"},
+      {:phoenix_live_reload,
+       git: "/Users/hiram/Projects/web/suite/custom/phoenix_live_reload",
+       branch: "hiram",
+       only: :dev,
+       override: true}, # override dependency in phoenix_live_dashboard
+      {:phoenix_live_view,
+       git: "/Users/hiram/Projects/web/suite/custom/phoenix_live_view",
+       branch: "hiram_0_3",
+       override: true}, # override dependency in phoenix_live_dashboard
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
