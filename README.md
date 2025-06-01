@@ -8,13 +8,16 @@ Once everything is build an running you can access the
 assembled product page via
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
 
-### Fix deps/phoenix_live_reload/lib/phoenix_live_reload/live_reload.ex:
-* line 126: url = config[:url] || endpoint.path("/portal/phoenix/live_reload/socket#{suffix(endpoint)}")
-* line 184: path = conn.private.phoenix_endpoint.path("/portal/phoenix/live_reload/frame#{suffix(endpoint)}")
-<hr/>
+## Custom Phoenix Live Reload and Phoenix Live View
+In mix.exs use the custom phoenix_live_reload and phoenix_live_view git repositories (in "custom/" directory)
 
-* Log
-<hr/>
+## Fixing custom phoenix_live_view
+
+* npm run setup
+* mix release
+* mix assets.build
+
+## Log
 
 * mix local.hex
 * mix archive.install hex phx_new 1.7.21
@@ -113,15 +116,6 @@ Locations where ports are declared:
   * docker run --name toggles -p 4010:4010/tcp -t toggles:0.1.0
   * docker build -t aku:0.1.0 -f apps/aku/Dockerfile .
   * docker run --name aku -p 4100:4100/tcp -t aku:0.1.0
-
-## Custom Phoenix Live Reload and Phoenix Live View
-In mix.exs use the custom phoenix_live_reload and phoenix_live_view git repositories (in "custom/" directory)
-
-## Fixing custom phoenix_live_view
-
-* npm run setup
-* mix release
-* mix assets.build
 
 ## VSCodeVIM / Mac
 To enable key-repeating, execute the following in your Terminal, log out and back in, and then restart VS Code:
