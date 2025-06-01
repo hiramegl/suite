@@ -44,12 +44,12 @@ defmodule Portal.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload,
-       git: "/Users/hiram/Projects/web/suite/custom/phoenix_live_reload",
+       git: "/custom/phoenix_live_reload",
        branch: "hiram",
        only: :dev,
        override: true}, # override dependency in phoenix_live_dashboard
       {:phoenix_live_view,
-       git: "/Users/hiram/Projects/web/suite/custom/phoenix_live_view",
+       git: "/custom/phoenix_live_view",
        branch: "hiram_0_3",
        override: true}, # override dependency in phoenix_live_dashboard
       {:floki, ">= 0.30.0", only: :test},
