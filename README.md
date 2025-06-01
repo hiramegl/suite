@@ -53,6 +53,26 @@ assembled product page via
 * mix release --overwrite
 * /suite/_build/dev/rel/portal/bin/portal start
 
+## Preparing to build a docker image
+
+Make the following changes:
+1. mix.exs, change custom git repo paths to:
+<pre>
+   {:phoenix_live_reload,
+    git: "/custom/phoenix_live_reload",
+    ...
+   {:phoenix_live_view,
+    git: "/custom/phoenix_live_view",
+</pre>
+2. dev.exs, change db hostname to:
+<pre>
+   hostname: "host.docker.internal",
+</pre>
+3. dev.exs, change endpoint binding to:
+<pre>
+   http: [ip: {0, 0, 0, 0}, port: 4000]
+</pre>
+
 ## Building an image and running it
 * Add a Dockerfile and .dockerignore file
 * REMOVE ALL BUILD RESOURCES, otherwise docker try to use the files in the host system (MacOS):
@@ -64,22 +84,22 @@ assembled product page via
     * docker build -t portal:0.1.0 -f apps/portal/Dockerfile --no-cache --progress=plain .
   * Build image (not verbose)
     * docker build -t portal:0.1.0 -f apps/portal/Dockerfile .
-  * docker run --name web_portal -p 4000:4000/tcp -t portal:0.1.0
-  * docker stop web_portal
-  * docker start web_portal
-  * docker exec -it web_portal sh
+  * docker run --name portal -p 4000:4000/tcp -t portal:0.1.0
+  * docker stop portal
+  * docker start portal
+  * docker exec -it portal sh
 
 ## Ports
 <pre>
             http   postgres
-portal int  4000   6000
+portal      4000   6000
 toggles     4010   6010
-aku int     4100   6100
+aku         4100   6100
 
-portal ext  5000   7000
-aku ext     5100   7100
+survey      5000   7000
+aku_survey  5100   7100
 
-Locations where ports are found:
+Locations where ports are declared:
 * Dockerfile
 * README.md
 * dev.exs
@@ -94,54 +114,14 @@ Locations where ports are found:
   * docker build -t aku:0.1.0 -f apps/aku/Dockerfile .
   * docker run --name aku -p 4100:4100/tcp -t aku:0.1.0
 
-## Patch deps/phoenix_live_reload/lib/phoenix_live_reload/live_reload.ex
-In order to use a \<root\> tag instead of \<body\> patch live_reload.ex like so:
+## Custom Phoenix Live Reload and Phoenix Live View
+In mix.exs use the custom phoenix_live_reload and phoenix_live_view git repositories (in "custom/" directory)
 
-<pre>
-  def call(%Plug.Conn{path_info: ["phoenix", "live_reload", "frame" | _suffix]} = conn, _) do
-    endpoint = conn.private.phoenix_endpoint
-    config = endpoint.config(:live_reload)
-    url = config[:url] || endpoint.path("/portal/phoenix/live_reload/socket#{suffix(endpoint)}")
-    interval = config[:interval] || 100
-    .
-    .
-    .
+## Fixing custom phoenix_live_view
 
-  -------------------------
-
-  defp body_tag, do: "root"
-
-  defp before_send_inject_reloader(conn, endpoint, config) do
-    register_before_send(conn, fn conn ->
-      if conn.resp_body != nil and html?(conn) do
-        resp_body = IO.iodata_to_binary(conn.resp_body)
-
-        if has_body?(resp_body) and :code.is_loaded(endpoint) do
-          {head, [last]} = Enum.split(String.split(resp_body, "</#{body_tag()}>"), -1)
-          head = Enum.intersperse(head, "</#{body_tag()}>")
-          body = [head, reload_assets_tag(conn, endpoint, config), "</#{body_tag()}>" | last]
-          put_in(conn.resp_body, body)
-        else
-          conn
-        end
-      else
-        conn
-      end
-    end)
-  end
-
-  defp html?(conn) do
-    case get_resp_header(conn, "content-type") do
-      [] -> false
-      [type | _] -> String.starts_with?(type, "text/html")
-    end
-  end
-
-  defp has_body?(resp_body), do: String.contains?(resp_body, "<#{body_tag()}")
-
-  defp reload_assets_tag(conn, endpoint, config) do
-    path = conn.private.phoenix_endpoint.path("/portal/phoenix/live_reload/frame#{suffix(endpoint)}")
-</pre>
+* npm run setup
+* mix release
+* mix assets.build
 
 ## VSCodeVIM / Mac
 To enable key-repeating, execute the following in your Terminal, log out and back in, and then restart VS Code:
@@ -154,9 +134,3 @@ defaults delete -g ApplePressAndHoldEnabled                                     
 
 IO.puts("*******> socket: #{socket |> inspect(pretty: true, limit:  :infinity, width:  120)}")
 </pre>
-
-## In phoenix_live_view
-
-* npm run setup
-* mix release
-* mix assets.build
