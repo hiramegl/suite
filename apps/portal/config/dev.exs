@@ -24,7 +24,7 @@ config :portal, PortalWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "xla4MBLKT+FtQQ5BaKUBCMRxYIYC1rqW0XIPq907XqOHQeF8j7gbjtZ8qkXzE+mT",
+  secret_key_base: "UXdtGXA1YlDj2oiIEpeozrEGW8VCW0a9UnmUqmAXPiISbiWg89DFXM37PhENlT2k",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:portal, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:portal, ~w(--watch)]}
@@ -60,9 +60,7 @@ config :portal, PortalWeb.Endpoint,
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/portal_web/(controllers|live|components)/.*(ex|heex)$"
-    ],
-    prefix: "/portal",
-    root_tag: "root-portal",
+    ]
   ]
 
 # Enable dev routes for dashboard and mailbox

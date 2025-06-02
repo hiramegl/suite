@@ -3,15 +3,11 @@ defmodule CounterComponent do
 
   def render(assigns) do
     ~H"""
-    <div class="text-center">
-      <h1 class="text-4xl font-bold text-center"> Counter: <%= @val %> </h1>
-      <button phx-click="dec" class="text-6xl pb-2 w-20 rounded-lg bg-red-500 hover:bg-red-600">
-        -
-      </button>
-      <button phx-click="inc" class="text-6xl pb-2 w-20 rounded-lg bg-green-500 hover:bg-green-600">
-        +
-      </button>
-    </div>
+    <span>
+      Counter: <%= @val %>
+      <button phx-click="dec" class="w-5 rounded bg-red-500 hover:bg-red-600">-</button>
+      <button phx-click="inc" class="w-5 rounded bg-green-500 hover:bg-green-600">+</button>
+    </span>
     """
   end
 end

@@ -8,7 +8,6 @@ defmodule PortalWeb.Router do
     plug :put_root_layout, html: {PortalWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :set_content_encoding_identity
   end
 
   pipeline :api do
@@ -18,11 +17,9 @@ defmodule PortalWeb.Router do
   scope "/", PortalWeb do
     pipe_through :browser
 
-    get "/init", InitController, :init
+    get "/home", PageController, :home
 
     live "/", Counter
-    #get "/", HomeController, :home
-    #get "/", WorkController, :work
   end
 
   # Other scopes may use custom stacks.
@@ -45,10 +42,5 @@ defmodule PortalWeb.Router do
       live_dashboard "/dashboard", metrics: PortalWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
-  end
-
-  def set_content_encoding_identity(conn, _opts) do
-    conn
-    |> put_resp_header("content-encoding", "identity")
   end
 end

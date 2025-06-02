@@ -17,7 +17,7 @@ config :portal, Portal.Repo,
 # you can enable the server option below.
 config :portal, PortalWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "ijNGiQDU46GrazaspBNCNgUJ7Lf0b6F1+9RkLSqJiipGQH2/ZhA3Z0+WWv5IHTNH",
+  secret_key_base: "KLO3OC4KQ1hhaYHepY8eE2xo936r7zZx7yRGbI1RmUOLKRBgMlAzmy0HswLPSy5+",
   server: false
 
 # In test we don't send emails

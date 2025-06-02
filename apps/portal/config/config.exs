@@ -19,10 +19,8 @@ config :portal, PortalWeb.Endpoint,
     formats: [html: PortalWeb.ErrorHTML, json: PortalWeb.ErrorJSON],
     layout: false
   ],
-  http_1_options: [compress: false],
-  http_2_options: [compress: false],
   pubsub_server: Portal.PubSub,
-  live_view: [signing_salt: "Y4jIkJri"],
+  live_view: [signing_salt: "tvngAQOY"],
   server: true
 
 # Configures the mailer

@@ -7,7 +7,7 @@ defmodule PortalWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_portal_key",
-    signing_salt: "avnufz7A",
+    signing_salt: "2KkVZ2Py",
     same_site: "Lax",
     #secure: true, # safari does not allow secure cookies in localhost
   ]
