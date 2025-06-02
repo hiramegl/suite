@@ -3,7 +3,7 @@ defmodule PresenceComponent do
 
   def render(assigns) do
     ~H"""
-    <h1 class="text-center pt-2 text-xl">Anslutna klienter: <%= @present %></h1>
+    <span>Anslutna: <%= @present %></span>
     """
   end
 end
