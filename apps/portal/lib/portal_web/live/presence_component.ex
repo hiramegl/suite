@@ -3,7 +3,7 @@ defmodule PresenceComponent do
 
   def render(assigns) do
     ~H"""
-    <span>Connected: <%= @present %></span>
+    <span>Connected: <span class="badge badge-accent"><%= @present %></span></span>
     """
   end
 end

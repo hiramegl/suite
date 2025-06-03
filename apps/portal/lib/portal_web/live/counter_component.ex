@@ -4,9 +4,9 @@ defmodule CounterComponent do
   def render(assigns) do
     ~H"""
     <span>
-      Counter: <%= @val %>
-      <button phx-click="dec" class="w-5 rounded bg-red-500 hover:bg-red-600">-</button>
-      <button phx-click="inc" class="w-5 rounded bg-green-500 hover:bg-green-600">+</button>
+      Counter: <div class="badge badge-primary"><%= @val %></div>
+      <button phx-click="dec" class="btn btn-primary">-</button>
+      <button phx-click="inc" class="btn btn-accent">+</button>
     </span>
     """
   end

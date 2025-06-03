@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html
   lang="en"
-  class="[scrollbar-gutter:stable]">
+  class="[scrollbar-gutter:stable]"
+  data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -21,7 +22,6 @@
     </style>
 
     <InitComponents.render
-      id="init_comp"
       svcs={["aku"]}/><!-- zTODO: this list of services should be set programmatically -->
 
     <link
@@ -34,7 +34,7 @@
       type="text/javascript"
       src={~p"/assets/app.js"}></script>
   </head>
-  <body class="bg-white">
+  <body>
     {@inner_content}
   </body>
 </html>

@@ -18,8 +18,14 @@ module.exports = {
       }
     },
   },
+  // https://www.nicholasmoen.com/blog/daisyui-elixir-phoenix/
+  daisyui: {
+    logs: false,
+    themes: ["light", "dark", "bumblebee", "emerald", "corporate", "aqua", "winter", "nord"], // https://daisyui.com/docs/themes/
+  },
   plugins: [
-    require("@tailwindcss/forms"),
+    require("daisyui"),
+    //require("@tailwindcss/forms"), // commented to prevent conflicts with daisyUI form components
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //
