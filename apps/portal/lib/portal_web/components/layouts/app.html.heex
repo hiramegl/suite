@@ -2,10 +2,8 @@
   class="h-full bg-white border border-dashed border-sky-500 border-8">
   <.flash_group flash={@flash} />
   {@inner_content}
-  <iframe src="/aku/init" style="display: none"></iframe>
-  <aku-main id="aku-container"></aku-main>
-  <script
-    phx-track-static
-    type="text/javascript"
-    src="/aku/assets/app.js"></script>
+  <.live_component
+    module={ServiceComponent}
+    id="svc_comp"
+    service="aku" />
 </main>

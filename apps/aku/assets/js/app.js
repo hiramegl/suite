@@ -56,4 +56,3 @@ document.
       // >> liveSocket.disableLatencySim()
       window.liveSocket = liveSocket
     })
-

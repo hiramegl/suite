@@ -1,19 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" class="[scrollbar-gutter:stable]">
+<html
+  lang="en"
+  class="[scrollbar-gutter:stable]">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title default="Portal" suffix=" · Phoenix Framework">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1" />
+    <meta
+      name="csrf-token"
+      content={get_csrf_token()} />
+    <.live_title
+      default="Portal"
+      suffix=" · Phoenix Framework">
       {assigns[:page_title]}
     </.live_title>
     <style type="text/css">
       html,body { height: 100%; margin: 0px; padding: 0px; }
       div[data-phx-main] { height: 100%; }
     </style>
-    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
-    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
-    </script>
+
+    <InitComponents.render
+      id="init_comp"
+      svcs={["aku"]}/><!-- zTODO: this list of services should be set programmatically -->
+
+    <link
+      phx-track-static
+      rel="stylesheet"
+      href={~p"/assets/app.css"} />
+    <script
+      defer
+      phx-track-static
+      type="text/javascript"
+      src={~p"/assets/app.js"}></script>
   </head>
   <body class="bg-white">
     {@inner_content}

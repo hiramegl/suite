@@ -54,6 +54,7 @@ defmodule Aku.MixProject do
        override: true}, # override dependency in phoenix_live_dashboard
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
+      {:phoenix_copy, "~> 0.1.4"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
       {:heroicons,
@@ -87,8 +88,9 @@ defmodule Aku.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind aku", "esbuild aku"],
+      "assets.build": ["phx.copy default", "tailwind aku", "esbuild aku"],
       "assets.deploy": [
+        "phx.copy default",
         "tailwind aku --minify",
         "esbuild aku --minify",
         "phx.digest"

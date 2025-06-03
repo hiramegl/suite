@@ -8,7 +8,7 @@ defmodule AkuWeb.Router do
     plug :put_root_layout, html: {AkuWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :set_content_encoding_identity
+    plug :put_content_encoding_identity
   end
 
   pipeline :api do
@@ -45,7 +45,7 @@ defmodule AkuWeb.Router do
     end
   end
 
-  def set_content_encoding_identity(conn, _opts) do
+  def put_content_encoding_identity(conn, _opts) do
     conn
     |> put_resp_header("content-encoding", "identity")
   end
