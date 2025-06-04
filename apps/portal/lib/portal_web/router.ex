@@ -19,7 +19,7 @@ defmodule PortalWeb.Router do
 
     get "/home", PageController, :home
 
-    live "/", Counter
+    live "/", Main
   end
 
   # Other scopes may use custom stacks.
