@@ -43,19 +43,83 @@ defmodule PortalWeb.Main do
 
   def render(assigns) do
     ~H"""
-      <div class="drawer  lg:drawer-open">
+      <div class="drawer lg:drawer-open">
         <input id="left-sidebar-drawer" type="checkbox" class="drawer-toggle"/>
 
-        <div class="drawer-content flex flex-col ">
+        <div class="drawer-content flex flex-col">
+          <div class="navbar sticky top-0 bg-base-100 z-10 shadow-md">
+
+            <div class="flex-1">
+              <label
+                for="left-sidebar-drawer"
+                class="btn btn-primary drawer-button lg:hidden">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                  class="h-5 inline-block w-5">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+                </svg>
+              </label>
+              <h1 class="text-2xl font-semibold ml-2">AKU - Arbetskraftundersökning</h1>
+            </div>
+
+            <div class="flex-none">
+              <div class="badge badge-primary badge-outline">Insamlingsomgång börjar nästa vecka</div>
+              <button class="btn btn-ghost btn-circle">
+                <div class="indicator">
+                  <.icon name="hero-bell-solid" class="h-6 w-6"/>
+                  <span class="indicator-item badge badge-secondary badge-sm">15</span>
+                </div>
+              </button>
+
+              <div class="ml-6">
+                <div class="text-l font-semibold grid place-content-center">SCBHIGA</div>
+                <div class="text-sm grid place-content-center">IT/SV/VA</div>
+              </div>
+              <div class="dropdown dropdown-end ml-2">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                  <div class="w-10 rounded-full">
+                    <img src="/images/profile.jpg" alt="profile">
+                  </div>
+                </label>
+                <ul
+                  tabindex="0"
+                  class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-100">
+                  <li class="justify-between">
+                    <a href="/app/settings-profile">Profile Settings
+                      <span class="badge">New</span>
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="/app/settings-billing">Bill History</a>
+                  </li>
+                  <div class="divider mt-0 mb-0"></div>
+                  <li>
+                    <a>Logout</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           <.live_component
             module={ServiceComponent}
             id="svc_comp"
             service="aku" />
         </div>
 
-        <div class="drawer-side  z-30  ">
-          <label for="left-sidebar-drawer" class="drawer-overlay"></label>
-          <ul class="menu  pt-2 w-80 bg-base-100 min-h-full   text-base-content">
+        <div class="drawer-side z-30">
+          <label
+            for="left-sidebar-drawer"
+            class="drawer-overlay"></label>
+          <ul class="menu pt-2 w-60 bg-base-100 min-h-full text-base-content">
             <button class="btn btn-ghost bg-base-300  btn-circle z-50 top-0 right-0 mt-4 mr-2 absolute lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 inline-block w-5">
@@ -63,17 +127,29 @@ defmodule PortalWeb.Main do
               </svg>
             </button>
             <li class="mb-2 font-semibold text-xl">
-              <a href="/app/welcome">
-                <img class="mask mask-squircle w-10" src="/logo192.png" alt="DashWind Logo">DashWind
+              <a href="/app/welcome" class="bg-green-100">
+                <img class="mask mask-squircle w-10" src="/images/scb_logo_192.jpg" alt="Portal Logo">
+                Portal
+                <div class="badge badge-accent">QA</div>
               </a>
             </li>
             <li class="">
-              <a class="font-semibold  bg-base-200 " href="/app/dashboard" aria-current="page">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-6 w-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"></path>
-                </svg> Dashboard
+              <a class="font-semibold bg-base-200" href="/app/dashboard" aria-current="page">
+                <.icon name="hero-user-group-solid" class="h-6 w-6"/>
+                AKU 2026
                 <span class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary " aria-hidden="true"></span>
+              </a>
+            </li>
+            <li class="">
+              <a class="font-normal" href="/app/dashboard" aria-current="page">
+                <.icon name="hero-user-group-solid" class="h-6 w-6"/>
+                AKU 2025
+              </a>
+            </li>
+            <li class="">
+              <a class="font-normal" href="/app/dashboard" aria-current="page">
+                <.icon name="hero-user-group-solid" class="h-6 w-6"/>
+                AKU 2024
               </a>
             </li>
             <li class="">
