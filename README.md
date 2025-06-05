@@ -1,8 +1,6 @@
 # Suite
 
 # Todo
-* webcomponents (simplification + encapsulation)
-* daisy-ui
 * docker deployment automatization
 * phx.new fixing (mix command, fix template)
 

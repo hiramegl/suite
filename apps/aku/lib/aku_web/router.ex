@@ -20,7 +20,7 @@ defmodule AkuWeb.Router do
 
     get "/init", InitController, :init
 
-    live "/", Counter
+    live "/", Main
   end
 
   # Other scopes may use custom stacks.
