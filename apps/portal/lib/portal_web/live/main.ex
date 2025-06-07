@@ -146,6 +146,20 @@ defmodule PortalWeb.Main do
                 ULF
               </a>
             </li>
+            <li class="">
+              <div>
+                <button phx-click="dec" class="btn btn-primary btn-xs w-10">-</button>
+                <button phx-click="inc" class="btn btn-accent btn-xs w-10">+</button>
+              </div>
+            </li>
+            <li class="">
+              <span>
+                Delade data: <div class="badge badge-secondary"><%= @val %></div>
+              </span>
+            </li>
+            <li class="">
+              <span>Antal anslutna: <span class="badge badge-accent"><%= @present %></span></span>
+            </li>
           </ul>
         </div>
       </div>

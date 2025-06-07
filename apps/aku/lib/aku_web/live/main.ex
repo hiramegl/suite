@@ -111,6 +111,9 @@ defmodule AkuWeb.Main do
 
       <div class="flex-none">
         <button class="btn text-xl">
+          <.icon name="hero-wrench-screwdriver-solid" class="w-5 h-5"/>
+        </button>
+        <button class="btn text-xl ml-2">
           <.icon name="hero-chat-bubble-left-right-solid" class="w-5 h-5"/>
         </button>
         <button class="btn dropdown dropdown-end ml-2">
@@ -134,8 +137,8 @@ defmodule AkuWeb.Main do
             </li>
             <li>
               <a>
-                <.icon name="hero-document-arrow-down-solid" class="w-5"/>
-                Ladda ner
+                <.icon name="hero-exclamation-triangle-solid" class="w-5"/>
+                Skapa ett ärende
               </a>
             </li>
             <li>
@@ -149,7 +152,7 @@ defmodule AkuWeb.Main do
       </div>
     </div>
 
-    <main class="flex-1 overflow-y-auto md:pt-4 pt-4 px-6  bg-base-200">
+    <main class="flex-1 overflow-y-auto md:pt-4 pt-4 px-6 bg-base-200">
       <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
         <.live_component
           module={Card}
@@ -174,11 +177,23 @@ defmodule AkuWeb.Main do
       </div>
 
       <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
-        <.live_component
-          module={Card}
-          id="card_2_1"
-          icon="calendar-days"
-          title="Planering 2025-Q3"/>
+        <div class="bg-white rounded-xl h-80 w-full p-6 shadow-xl mt-2 -z-9">
+          <div class="text-xl font-semibold">
+            <.icon name="hero-circle-stack-solid" class="w-5 h-5 mr-1"/>
+            Delade data
+          </div>
+          <div class="divider mt-1"></div>
+          <div class="mb-2">
+            <button phx-click="dec" class="btn btn-primary btn-xs w-10">-</button>
+            <button phx-click="inc" class="btn btn-accent btn-xs w-10">+</button>
+          </div>
+          <div>
+            Räknare: <div class="badge badge-secondary"><%= @val %></div>
+          </div>
+          <div>
+            Antal anslutna: <span class="badge badge-accent"><%= @present %></span>
+          </div>
+        </div>
         <.live_component
           module={Card}
           id="card_2_2"
@@ -217,8 +232,8 @@ defmodule AkuWeb.Main do
         <.live_component
           module={Card}
           id="card_3_4"
-          icon="envelope"
-          title="Viktiga meddelande"/>
+          icon="calendar-days"
+          title="Planering 2025-Q3"/>
       </div>
 
       <div class="h-16"></div>
