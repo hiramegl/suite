@@ -49,27 +49,17 @@ defmodule PortalWeb.Main do
         <div class="drawer-content flex flex-col">
           <div class="navbar sticky top-0 bg-base-100 z-10 shadow-md">
 
+            <!-- Main title ******************************************************************** -->
             <div class="flex-1">
               <label
                 for="left-sidebar-drawer"
                 class="btn btn-primary drawer-button lg:hidden">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  class="h-5 inline-block w-5">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-                </svg>
+                <.icon name="hero-bars-3-solid" class="h-6 w-6"/>
               </label>
               <h1 class="text-2xl font-semibold ml-2">AKU - Arbetskraftundersökning</h1>
             </div>
 
+            <!-- Navbar tools and profile ****************************************************** -->
             <div class="flex-none">
               <div class="badge badge-primary badge-outline">Insamlingsomgång börjar nästa vecka</div>
               <button class="btn btn-ghost btn-circle">
@@ -109,6 +99,7 @@ defmodule PortalWeb.Main do
             </div>
           </div>
 
+          <!-- Main content ******************************************************************** -->
           <.live_component
             module={ServiceComponent}
             id="svc_comp"
@@ -120,32 +111,59 @@ defmodule PortalWeb.Main do
             for="left-sidebar-drawer"
             class="drawer-overlay"></label>
           <ul class="menu pt-2 w-60 bg-primary-100 min-h-full text-base-content">
-            <button class="btn btn-ghost bg-base-300  btn-circle z-50 top-0 right-0 mt-4 mr-2 absolute lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 inline-block w-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </button>
+            <!-- Top title row ***************************************************************** -->
             <li class="mb-2 font-semibold text-xl">
-              <a href="/app/welcome" class="bg-green-100">
-                <img class="mask mask-squircle w-10" src="/images/scb_logo_192.jpg" alt="Portal Logo">
+              <a
+                href="/app/welcome"
+                class="bg-green-100">
+                <img
+                  class="mask mask-squircle w-10"
+                  src="/images/scb_logo_192.jpg"
+                  alt="Portal Logo"/>
                 Portal
                 <div class="badge badge-accent">QA</div>
               </a>
             </li>
+
+            <!-- Services ********************************************************************** -->
             <li class="">
-              <a class="font-semibold bg-base-200" href="/app/dashboard" aria-current="page">
-                <.icon name="hero-building-office-2-solid" class="h-6 w-6"/>
-                AKU
-                <span class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary " aria-hidden="true"></span>
+              <a
+                class="font-normal"
+                href="/dashboard"
+                aria-current="page">
+                <.icon
+                  name="hero-squares-2x2-solid"
+                  class="h-6 w-6"/>
+                Dashboard
               </a>
             </li>
             <li class="">
-              <a class="font-normal" href="/app/dashboard" aria-current="page">
-                <.icon name="hero-home-modern-solid" class="h-6 w-6"/>
+              <a
+                class="font-semibold bg-base-200"
+                href="/aku"
+                aria-current="page">
+                <.icon
+                  name="hero-building-office-2-solid"
+                  class="h-6 w-6"/>
+                AKU
+                <span
+                  class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+                  aria-hidden="true"></span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="font-normal"
+                href="/ulf"
+                aria-current="page">
+                <.icon
+                  name="hero-home-modern-solid"
+                  class="h-6 w-6"/>
                 ULF
               </a>
             </li>
+
+            <!-- Shared state demo ************************************************************* -->
             <li class="">
               <div>
                 <button phx-click="dec" class="btn btn-primary btn-xs w-10">-</button>

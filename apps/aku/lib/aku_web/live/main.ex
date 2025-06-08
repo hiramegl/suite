@@ -107,6 +107,10 @@ defmodule AkuWeb.Main do
           <.icon name="hero-newspaper-solid" class="w-5 h-5"/>
           Rapportering
         </button>
+        <button class="btn text-xl ml-2">
+          <.icon name="hero-scale-solid" class="w-5 h-5"/>
+          Utvärdering
+        </button>
       </div>
 
       <div class="flex-none">
@@ -167,13 +171,18 @@ defmodule AkuWeb.Main do
         <.live_component
           module={Card}
           id="card_1_3"
-          icon="presentation-chart-bar"
-          title="Analys 2024-Q4"/>
-        <.live_component
-          module={Card}
-          id="card_1_4"
           icon="square-3-stack-3d"
           title="Bearbetning 2024-Q3"/>
+        <div class="bg-white rounded-xl h-80 w-full p-6 shadow-xl mt-2 -z-9">
+          <div class="text-xl font-semibold">
+            <.icon name="hero-presentation-chart-bar-solid" class="w-5 h-5 mr-1"/>
+            Analys 2024-Q4
+          </div>
+          <div class="divider mt-1"></div>
+          <img
+            src="/aku/images/chart01.jpg"
+            class="h-52 ml-12"/>
+        </div>
       </div>
 
       <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
