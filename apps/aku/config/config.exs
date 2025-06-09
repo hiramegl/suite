@@ -19,8 +19,6 @@ config :aku, AkuWeb.Endpoint,
     formats: [html: AkuWeb.ErrorHTML, json: AkuWeb.ErrorJSON],
     layout: false
   ],
-  http_1_options: [compress: false],
-  http_2_options: [compress: false],
   pubsub_server: Aku.PubSub,
   live_view: [signing_salt: "B6ujjq4O"],
   server: true
