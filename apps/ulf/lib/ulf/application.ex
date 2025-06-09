@@ -8,6 +8,7 @@ defmodule Ulf.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      Ulf.Count,
       UlfWeb.Telemetry,
       Ulf.Repo,
       {DNSCluster, query: Application.get_env(:ulf, :dns_cluster_query) || :ignore},
@@ -16,6 +17,7 @@ defmodule Ulf.Application do
       {Finch, name: Ulf.Finch},
       # Start a worker by calling: Ulf.Worker.start_link(arg)
       # {Ulf.Worker, arg},
+      Ulf.Presence,
       # Start to serve requests, typically the last entry
       UlfWeb.Endpoint
     ]

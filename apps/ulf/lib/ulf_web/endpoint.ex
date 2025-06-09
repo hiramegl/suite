@@ -8,7 +8,8 @@ defmodule UlfWeb.Endpoint do
     store: :cookie,
     key: "_ulf_key",
     signing_salt: "PoWKowY0",
-    same_site: "Lax"
+    same_site: "Lax",
+    #secure: true, # safari does not allow secure cookies in localhost
   ]
 
   socket "/live", Phoenix.LiveView.Socket,

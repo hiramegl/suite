@@ -17,7 +17,9 @@ defmodule UlfWeb.Router do
   scope "/", UlfWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/init", InitController, :init
+
+    live "/", Main
   end
 
   # Other scopes may use custom stacks.
