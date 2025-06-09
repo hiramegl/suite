@@ -4,6 +4,7 @@ services:
     container_name: reverse_proxy
     volumes:
      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+     - ./nginx/config:/etc/nginx/config
      - ./nginx/root:/usr/share/nginx/root
     ports:
      - "3000:3000"
