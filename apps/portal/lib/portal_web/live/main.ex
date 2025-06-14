@@ -41,6 +41,10 @@ defmodule PortalWeb.Main do
     {:noreply, assign(socket, :present, new_present)}
   end
 
+  def working() do
+    "#{GenUi.hello()} / #{GenLib.hello()}"
+  end
+
   def render(assigns) do
     ~H"""
       <div class="drawer lg:drawer-open">
@@ -56,7 +60,7 @@ defmodule PortalWeb.Main do
                 class="btn btn-primary drawer-button lg:hidden">
                 <.icon name="hero-bars-3-solid" class="h-6 w-6"/>
               </label>
-              <h1 class="text-2xl font-semibold ml-2">AKU - Arbetskraftundersökning</h1>
+              <h1 class="text-2xl font-semibold ml-2">ULF - Undersökning av levnadsförhållande</h1>
             </div>
 
             <!-- Navbar tools and profile ****************************************************** -->
@@ -93,6 +97,7 @@ defmodule PortalWeb.Main do
                   <div class="divider mt-0 mb-0"></div>
                   <li>
                     <a>Logout</a>
+                    <span>{working()}</span>
                   </li>
                 </ul>
               </div>
@@ -103,7 +108,7 @@ defmodule PortalWeb.Main do
           <.live_component
             module={ServiceComponent}
             id="svc_comp"
-            service="aku" />
+            service="ulf"/>
         </div>
 
         <div class="drawer-side z-30">

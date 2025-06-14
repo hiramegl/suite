@@ -53,15 +53,26 @@ config :portal, PortalWeb.Endpoint,
 # configured to run both http and https servers on
 # different ports.
 
+# https://hexdocs.pm/phoenix_live_reload/Phoenix.LiveReloader.html
+config :phoenix_live_reload, :dirs, [
+  "",
+  "../gen_ui"  |> Path.expand(),
+  "../gen_lib" |> Path.expand(),
+]
+
 # Watch static and templates for browser reloading.
 config :portal, PortalWeb.Endpoint,
   live_reload: [
     patterns: [
+      ~r"gen_ui/.*ex",
+      ~r"gen_lib/.*ex",
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/portal_web/(controllers|live|components)/.*(ex|heex)$"
     ]
-  ]
+  ],
+  reloadable_compilers: [:gettext, :elixir],
+  reloadable_apps: [:portal, :gen_ui, :gen_lib]
 
 # Enable dev routes for dashboard and mailbox
 config :portal, dev_routes: true

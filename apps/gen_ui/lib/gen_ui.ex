@@ -1,5 +1,5 @@
 defmodule GenUi do
   def hello do
-    :world
+    :world_ui
   end
 end
