@@ -41,6 +41,10 @@ defmodule UlfWeb.Main do
     {:noreply, assign(socket, :present, new_present)}
   end
 
+  def working() do
+    "#{GenUi.hello()} / #{GenLib.hello()}"
+  end
+
   def render(assigns) do
     ~H"""
     <div class="navbar sticky top-0">
