@@ -18,14 +18,22 @@ defmodule PortalWeb.Main do
       else
         0
       end
-    {:ok, assign(socket, val: Count.current(), present: initial_present)}
+    {
+      :ok,
+      socket
+      |> assign(
+        val: Count.current(),
+        present: initial_present,
+        service: "aku",
+        title: "AKU - Arbetskraftsundersökning"
+      )}
   end
 
-  def handle_event("inc", _, socket) do
+  def handle_event("inc", _params, socket) do
     {:noreply, assign(socket, :val, Count.incr())}
   end
 
-  def handle_event("dec", _, socket) do
+  def handle_event("dec", _params, socket) do
     {:noreply, assign(socket, :val, Count.decr())}
   end
 
@@ -41,10 +49,6 @@ defmodule PortalWeb.Main do
     {:noreply, assign(socket, :present, new_present)}
   end
 
-  def working() do
-    "#{GenUi.hello()} / #{GenLib.hello()}"
-  end
-
   def render(assigns) do
     ~H"""
       <div class="drawer lg:drawer-open">
@@ -52,63 +56,20 @@ defmodule PortalWeb.Main do
 
         <div class="drawer-content flex flex-col">
           <div class="navbar sticky top-0 bg-base-100 z-10 shadow-md">
-
-            <!-- Main title ******************************************************************** -->
-            <div class="flex-1">
-              <label
-                for="left-sidebar-drawer"
-                class="btn btn-primary drawer-button lg:hidden">
-                <.icon name="hero-bars-3-solid" class="h-6 w-6"/>
-              </label>
-              <h1 class="text-2xl font-semibold ml-2">ULF - Undersökning av levnadsförhållande</h1>
-            </div>
-
-            <!-- Navbar tools and profile ****************************************************** -->
-            <div class="flex-none">
-              <div class="badge badge-primary badge-outline">Insamlingsomgång börjar nästa vecka</div>
-              <button class="btn btn-ghost btn-circle">
-                <div class="indicator">
-                  <.icon name="hero-bell-solid" class="h-6 w-6"/>
-                  <span class="indicator-item badge badge-secondary badge-sm">15</span>
-                </div>
-              </button>
-
-              <div class="ml-6">
-                <div class="text-l font-semibold grid place-content-center">SCBHIGA</div>
-                <div class="text-sm grid place-content-center">IT/SV/VA</div>
-              </div>
-              <div class="dropdown dropdown-end ml-2">
-                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                  <div class="w-10 rounded-full">
-                    <img src="/images/profile.jpg" alt="profile">
-                  </div>
-                </label>
-                <ul
-                  tabindex="0"
-                  class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-100">
-                  <li class="justify-between">
-                    <a href="/app/settings-profile">Profile Settings
-                      <span class="badge">New</span>
-                    </a>
-                  </li>
-                  <li class="">
-                    <a href="/app/settings-billing">Bill History</a>
-                  </li>
-                  <div class="divider mt-0 mb-0"></div>
-                  <li>
-                    <a>Logout</a>
-                    <span>{working()}</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <.live_component
+              module={TitleComponent}
+              id="title"
+              title={@title}/>
+            <.live_component
+              module={NavbarToolsComponent}
+              id="navbar_tools"/>
           </div>
 
           <!-- Main content ******************************************************************** -->
           <.live_component
             module={ServiceComponent}
             id="svc_comp"
-            service="ulf"/>
+            service={@service}/>
         </div>
 
         <div class="drawer-side z-30">
@@ -116,72 +77,58 @@ defmodule PortalWeb.Main do
             for="left-sidebar-drawer"
             class="drawer-overlay"></label>
           <ul class="menu pt-2 w-60 bg-primary-100 min-h-full text-base-content">
-            <!-- Top title row ***************************************************************** -->
-            <li class="mb-2 font-semibold text-xl">
-              <a
-                href="/app/welcome"
-                class="bg-green-100">
-                <img
-                  class="mask mask-squircle w-10"
-                  src="/images/scb_logo_192.jpg"
-                  alt="Portal Logo"/>
-                Portal
-                <div class="badge badge-accent">QA</div>
-              </a>
-            </li>
+            <.live_component
+              module={SidebarTopComponent}
+              id="sidebar_top"/>
 
-            <!-- Services ********************************************************************** -->
-            <li class="">
-              <a
-                class="font-normal"
-                href="/dashboard"
-                aria-current="page">
-                <.icon
-                  name="hero-squares-2x2-solid"
-                  class="h-6 w-6"/>
-                Dashboard
-              </a>
-            </li>
-            <li class="">
-              <a
-                class="font-semibold bg-base-200"
-                href="/aku"
-                aria-current="page">
-                <.icon
-                  name="hero-building-office-2-solid"
-                  class="h-6 w-6"/>
-                AKU
-                <span
-                  class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
-                  aria-hidden="true"></span>
-              </a>
-            </li>
-            <li class="">
-              <a
-                class="font-normal"
-                href="/ulf"
-                aria-current="page">
-                <.icon
-                  name="hero-home-modern-solid"
-                  class="h-6 w-6"/>
-                ULF
-              </a>
-            </li>
+            <.live_component
+              module={ServiceItemComponent}
+              id="dashboard"
+              name="Dashboard"
+              icon="hero-squares-2x2-solid"
+              selected={if @service == "dash", do: "true", else: "false"}/>
+            <.live_component
+              module={ServiceItemComponent}
+              id="aku"
+              name="AKU"
+              icon="hero-building-office-2-solid"
+              selected={if @service == "aku", do: "true", else: "false"}/>
+            <.live_component
+              module={ServiceItemComponent}
+              id="ulf"
+              name="ULF"
+              icon="hero-home-modern-solid"
+              selected={if @service == "ulf", do: "true", else: "false"}/>
 
             <!-- Shared state demo ************************************************************* -->
             <li class="">
               <div>
-                <button phx-click="dec" class="btn btn-primary btn-xs w-10">-</button>
-                <button phx-click="inc" class="btn btn-accent btn-xs w-10">+</button>
+                <button
+                  phx-click="dec"
+                  class="btn btn-primary btn-xs w-10">
+                  -
+                </button>
+                <button
+                  phx-click="inc"
+                  phx-value-service="aku"
+                  class="btn btn-accent btn-xs w-10">
+                  +
+                </button>
               </div>
             </li>
             <li class="">
               <span>
-                Delade data: <div class="badge badge-secondary"><%= @val %></div>
+                Delade data:
+                <div class="badge badge-secondary"><%= @val %></div>
               </span>
             </li>
             <li class="">
-              <span>Antal anslutna: <span class="badge badge-accent"><%= @present %></span></span>
+              <span>
+                Antal anslutna:
+                <span class="badge badge-accent">
+                  <%= @present %>
+                </span>
+              </span>
             </li>
           </ul>
         </div>
