@@ -17,8 +17,6 @@ defmodule UlfWeb.Router do
   scope "/", UlfWeb do
     pipe_through :browser
 
-    get "/init", InitController, :init
-
     live "/", Main
   end
 

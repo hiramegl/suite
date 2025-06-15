@@ -4,16 +4,16 @@ defmodule ServiceComponent do
   def render(assigns) do
     ~H"""
     <div>
-      <iframe
-        src={"/#{assigns.service}/init"}
-        style="display: none"></iframe>
+      <script
+        type="text/javascript"
+        src={"/#{@service}/assets/#{@service}-main.js"}></script>
       <.dynamic_tag
-        tag_name={"#{assigns.service}-main"}
-        id={"#{assigns.service}-container"}></.dynamic_tag>
+        tag_name={"#{@service}-main"}
+        id={"#{@service}-container"}></.dynamic_tag>
       <script
         phx-track-static
         type="text/javascript"
-        src={"#{assigns.service}/assets/app.js"}></script>
+        src={"#{@service}/assets/app.js"}></script>
     </div>
     """
   end

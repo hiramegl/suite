@@ -17,8 +17,6 @@ defmodule AkuWeb.Router do
   scope "/", AkuWeb do
     pipe_through :browser
 
-    get "/init", InitController, :init
-
     live "/", Main
   end
 
