@@ -24,9 +24,9 @@ defmodule PortalWeb.Main do
       |> assign(
         val: Count.current(),
         present: initial_present,
-        service: "aku",
-        title: "AKU - Arbetskraftsundersökning"
-      )}
+        service: "aku"
+      )
+    }
   end
 
   def handle_event("inc", _params, socket) do
@@ -49,6 +49,10 @@ defmodule PortalWeb.Main do
     {:noreply, assign(socket, :present, new_present)}
   end
 
+  def get_title("dash"), do: "Min dashboard"
+  def get_title("aku"),  do: "AKU - Arbetskraftsundersökning"
+  def get_title("ulf"),  do: "ULF - Undersökning av levnadsförhållanden"
+
   def render(assigns) do
     ~H"""
       <div class="drawer lg:drawer-open">
@@ -59,17 +63,23 @@ defmodule PortalWeb.Main do
             <.live_component
               module={TitleComponent}
               id="title"
-              title={@title}/>
+              title={get_title(@service)}/>
             <.live_component
               module={NavbarToolsComponent}
               id="navbar_tools"/>
           </div>
 
           <!-- Main content ******************************************************************** -->
+          <%= if @service == "dash" do %>
+          <.live_component
+            module={DashboardComponent}
+            id="dash_comp"/>
+          <% else %>
           <.live_component
             module={ServiceComponent}
             id="svc_comp"
             service={@service}/>
+          <% end %>
         </div>
 
         <div class="drawer-side z-30">
