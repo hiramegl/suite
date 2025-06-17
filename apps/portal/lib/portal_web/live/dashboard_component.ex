@@ -1,6 +1,7 @@
 defmodule DashboardComponent do
   use Phoenix.LiveComponent
-  import PortalWeb.CoreComponents, only: [icon: 1]
+  import GenUi.Card
+  import GenUi.Icon
 
   def render(assigns) do
     ~H"""
@@ -73,9 +74,7 @@ defmodule DashboardComponent do
       </div>
       <main class="flex-1 overflow-y-auto md:pt-4 pt-4 px-6 bg-base-200">
         <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
-          <.live_component
-            module={GenUi.Card}
-            id="card_1_1"
+          <.card
             icon="hero-square-3-stack-3d-solid"
             title="Bearbetning 2025-Q1"/>
         </div>

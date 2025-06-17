@@ -1,9 +1,11 @@
 defmodule GenUi.Card do
-  use Phoenix.LiveComponent
-  import GenUi.Core, only: [icon: 1]
+  use Phoenix.Component
+  import GenUi.Icon
 
+  attr :icon,  :string, required: true
+  attr :title, :string, required: true
   attr :class, :string, default: "bg-base-100"
-  def render(assigns) do
+  def card(assigns) do
     ~H"""
     <div class={"rounded-xl h-80 w-full p-6 #{@class} shadow-xl mt-2 -z-9"}>
       <div class="text-xl font-semibold">
