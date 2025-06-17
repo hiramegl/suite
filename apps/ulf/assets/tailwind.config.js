@@ -9,7 +9,8 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/ulf_web.ex",
-    "../lib/ulf_web/**/*.*ex"
+    "../lib/ulf_web/**/*.*ex",
+    "../../gen_ui/lib/**/*.*ex"
   ],
   theme: {
     extend: {

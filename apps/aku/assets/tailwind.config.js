@@ -9,7 +9,8 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/aku_web.ex",
-    "../lib/aku_web/**/*.*ex"
+    "../lib/aku_web/**/*.*ex",
+    "../../gen_ui/lib/**/*.*ex"
   ],
   theme: {
     extend: {
