@@ -4,6 +4,15 @@ defmodule PortalWeb.Main do
   alias Phoenix.PubSub
   alias Portal.Presence
 
+  import PortalWeb.Live.{
+    SidebarTop,
+    ServiceItem,
+    Title,
+    NavbarTools,
+    Container,
+    Dashboard,
+  }
+
   @topic Count.topic
   @presence_topic "presence"
 
@@ -30,11 +39,25 @@ defmodule PortalWeb.Main do
   end
 
   def handle_event("inc", _params, socket) do
-    {:noreply, assign(socket, :val, Count.incr())}
+    {:noreply, socket |> assign(:val, Count.incr())}
   end
 
   def handle_event("dec", _params, socket) do
-    {:noreply, assign(socket, :val, Count.decr())}
+    {:noreply, socket |> assign(:val, Count.decr())}
+  end
+
+  def handle_event("svc_change", params, socket) do
+    new_svc = params |> Map.get("service")
+    old_svc = socket.assigns.service
+
+    socket = if new_svc != old_svc do
+      socket
+      |> assign(service: new_svc)
+    else
+      socket
+    end
+
+    {:noreply, socket}
   end
 
   def handle_info({:count, count}, socket) do
@@ -60,25 +83,15 @@ defmodule PortalWeb.Main do
 
         <div class="drawer-content flex flex-col">
           <div class="navbar sticky top-0 bg-base-100 z-10 shadow-md">
-            <.live_component
-              module={TitleComponent}
-              id="title"
-              title={get_title(@service)}/>
-            <.live_component
-              module={NavbarToolsComponent}
-              id="navbar_tools"/>
+            <.title title={get_title(@service)}/>
+            <.navbar_tools/>
           </div>
 
-          <!-- Main content ******************************************************************** -->
+          <!-- Main content -->
           <%= if @service == "dash" do %>
-          <.live_component
-            module={DashboardComponent}
-            id="dash_comp"/>
+          <.dashboard/>
           <% else %>
-          <.live_component
-            module={ServiceComponent}
-            id="svc_comp"
-            service={@service}/>
+          <.container service={@service}/>
           <% end %>
         </div>
 
@@ -87,24 +100,19 @@ defmodule PortalWeb.Main do
             for="left-sidebar-drawer"
             class="drawer-overlay"></label>
           <ul class="menu pt-2 w-60 bg-primary-100 min-h-full text-base-content">
-            <.live_component
-              module={SidebarTopComponent}
-              id="sidebar_top"/>
+            <.sidebar_top/>
 
-            <.live_component
-              module={ServiceItemComponent}
-              id="dashboard"
+            <.service_item
+              id="dash"
               name="Dashboard"
               icon="hero-squares-2x2-solid"
               selected={if @service == "dash", do: "true", else: "false"}/>
-            <.live_component
-              module={ServiceItemComponent}
+            <.service_item
               id="aku"
               name="AKU"
               icon="hero-building-office-2-solid"
               selected={if @service == "aku", do: "true", else: "false"}/>
-            <.live_component
-              module={ServiceItemComponent}
+            <.service_item
               id="ulf"
               name="ULF"
               icon="hero-home-modern-solid"

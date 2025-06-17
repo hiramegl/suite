@@ -1,18 +1,19 @@
-defmodule ServiceItemComponent do
-  use Phoenix.LiveComponent
-  import PortalWeb.CoreComponents, only: [icon: 1]
+defmodule PortalWeb.Live.ServiceItem do
+  use Phoenix.Component
+  import GenUi.Icon
 
-  attr :name, :string
-  attr :icon, :string
+  attr :id,   :string, required: true
+  attr :name, :string, required: true
+  attr :icon, :string, required: true
   attr :selected, :boolean, default: false
-
-  def render(assigns) do
+  def service_item(assigns) do
     ~H"""
     <li class="">
       <span
         class={"font-semibold #{if @selected == "true", do: "bg-base-200"}"}
-        href="/aku"
-        aria-current="page">
+        aria-current="page"
+        phx-click="svc_change"
+        phx-value-service={@id}>
         <.icon
           name={@icon}
           class="h-6 w-6"/>

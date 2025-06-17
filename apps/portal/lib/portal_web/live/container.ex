@@ -1,7 +1,8 @@
-defmodule ServiceComponent do
-  use Phoenix.LiveComponent
+defmodule PortalWeb.Live.Container do
+  use Phoenix.Component
 
-  def render(assigns) do
+  attr :service, :string, required: true
+  def container(assigns) do
     ~H"""
     <div>
       <script

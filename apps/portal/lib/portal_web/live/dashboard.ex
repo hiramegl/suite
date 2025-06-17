@@ -1,9 +1,9 @@
-defmodule DashboardComponent do
-  use Phoenix.LiveComponent
+defmodule PortalWeb.Live.Dashboard do
+  use Phoenix.Component
   import GenUi.Card
   import GenUi.Icon
 
-  def render(assigns) do
+  def dashboard(assigns) do
     ~H"""
     <div>
       <div class="navbar sticky top-0">

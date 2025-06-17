@@ -1,10 +1,9 @@
-defmodule TitleComponent do
-  use Phoenix.LiveComponent
-  import PortalWeb.CoreComponents, only: [icon: 1]
+defmodule PortalWeb.Live.Title do
+  use Phoenix.Component
+  import GenUi.Icon
 
-  attr :title, :string
-
-  def render(assigns) do
+  attr :title, :string, required: true
+  def title(assigns) do
     ~H"""
     <div class="flex-1">
       <label

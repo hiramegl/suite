@@ -1,4 +1,4 @@
-defmodule NavbarToolsComponent do
+defmodule PortalWeb.Live.NavbarTools do
   use Phoenix.LiveComponent
   import PortalWeb.CoreComponents, only: [icon: 1]
 
@@ -6,7 +6,7 @@ defmodule NavbarToolsComponent do
     "#{GenUi.hello()} / #{GenLib.hello()}"
   end
 
-  def render(assigns) do
+  def navbar_tools(assigns) do
     ~H"""
       <div class="flex-none">
         <div class="badge badge-primary badge-outline">Insamlingsomgång börjar nästa vecka</div>
