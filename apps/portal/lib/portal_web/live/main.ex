@@ -1,5 +1,6 @@
 defmodule PortalWeb.Main do
   use PortalWeb, :live_view
+
   alias Portal.Count
   alias Phoenix.PubSub
   alias Portal.Presence
@@ -33,7 +34,8 @@ defmodule PortalWeb.Main do
       |> assign(
         val: Count.current(),
         present: initial_present,
-        service: "aku"
+        service: "aku",
+        services: ["aku", "ulf"]
       )
     }
   end
@@ -118,7 +120,7 @@ defmodule PortalWeb.Main do
               icon="hero-home-modern-solid"
               selected={if @service == "ulf", do: "true", else: "false"}/>
 
-            <!-- Shared state demo ************************************************************* -->
+            <!-- Shared state demo -->
             <li class="">
               <div>
                 <button
