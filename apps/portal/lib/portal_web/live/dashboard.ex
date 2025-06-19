@@ -81,6 +81,11 @@ defmodule PortalWeb.Live.Dashboard do
 
         <div class="h-16"></div>
       </main>
+      <div
+        id="stop-dispatcher"
+        phx-hook="StopDispatcher">
+        <!-- Only used to stop the topbar page-loading indicator -->
+      </div>
     </div>
     """
   end
