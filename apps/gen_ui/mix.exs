@@ -31,7 +31,7 @@ defmodule GenUi.MixProject do
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_view,
        git: "/Users/hiram/Projects/web/suite/custom/phoenix_live_view",
-       branch: "hiram_0_3",
+       branch: "hiram_1_0_17",
        override: true}, # override dependency in phoenix_live_dashboard
     ]
   end

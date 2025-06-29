@@ -46,7 +46,7 @@ defmodule Portal.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view,
        git: "/Users/hiram/Projects/web/suite/custom/phoenix_live_view",
-       branch: "hiram_0_3",
+       branch: "hiram_1_0_17",
        override: true}, # override dependency in phoenix_live_dashboard
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
