@@ -19,7 +19,11 @@ In mix.exs use the custom phoenix_live_reload and phoenix_live_view git reposito
 
 ## Fixing custom phoenix_live_view
 
+* cd assets
 * npm run setup
+* cd ..
+* mix deps.get
+* mix deps.compile
 * mix release
 * mix assets.build
 
