@@ -1,8 +1,6 @@
 defmodule PortalWeb.Main do
   use PortalWeb, :live_view
 
-  alias Portal.Count
-  alias Phoenix.PubSub
   alias Portal.Presence
 
   import PortalWeb.Live.{
@@ -14,13 +12,12 @@ defmodule PortalWeb.Main do
     Dashboard,
   }
 
-  @topic Count.topic
   @presence_topic "presence"
+  @counter_id "the_counter"
 
   def mount(_params, _session, socket) do
     initial_present =
       if connected?(socket) do
-        PubSub.subscribe(Portal.PubSub, @topic)
         Presence.track(self(), @presence_topic, socket.id, %{})
         PortalWeb.Endpoint.subscribe(@presence_topic)
         Presence.list(@presence_topic)
@@ -32,20 +29,12 @@ defmodule PortalWeb.Main do
       :ok,
       socket
       |> assign(
-        val: Count.current(),
         present: initial_present,
+        counter_id: @counter_id,
         service: "aku",
         services: ["aku", "ulf"]
       )
     }
-  end
-
-  def handle_event("inc", _params, socket) do
-    {:noreply, socket |> assign(:val, Count.incr())}
-  end
-
-  def handle_event("dec", _params, socket) do
-    {:noreply, socket |> assign(:val, Count.decr())}
   end
 
   def handle_event("svc_change", params, socket) do
@@ -63,7 +52,8 @@ defmodule PortalWeb.Main do
   end
 
   def handle_info({:count, count}, socket) do
-    {:noreply, assign(socket, val: count)}
+    send_update PortalWeb.Counter, id: @counter_id, count: count
+    {:noreply, socket}
   end
 
   def handle_info(
@@ -91,7 +81,7 @@ defmodule PortalWeb.Main do
 
           <!-- Main content -->
           <%= if @service == "dash" do %>
-          <.dashboard/>
+          <.dashboard counter_id={@counter_id}/>
           <% else %>
           <.container service={@service}/>
           <% end %>
@@ -120,28 +110,6 @@ defmodule PortalWeb.Main do
               icon="hero-home-modern-solid"
               selected={if @service == "ulf", do: "true", else: "false"}/>
 
-            <!-- Shared state demo -->
-            <li class="">
-              <div>
-                <button
-                  phx-click="dec"
-                  class="btn btn-primary btn-xs w-10">
-                  -
-                </button>
-                <button
-                  phx-click="inc"
-                  phx-value-service="aku"
-                  class="btn btn-accent btn-xs w-10">
-                  +
-                </button>
-              </div>
-            </li>
-            <li class="">
-              <span>
-                Delade data:
-                <div class="badge badge-secondary"><%= @val %></div>
-              </span>
-            </li>
             <li class="">
               <span>
                 Antal anslutna:
