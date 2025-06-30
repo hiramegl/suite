@@ -193,8 +193,18 @@ defmodule AkuWeb.Main do
           </div>
           <div class="divider mt-1"></div>
           <div class="mb-2">
-            <button phx-click="dec" class="btn btn-primary btn-xs w-10">-</button>
-            <button phx-click="inc" class="btn btn-accent btn-xs w-10">+</button>
+            <button
+              type="button"
+              phx-click="dec"
+              class="btn btn-primary btn-xs w-10">
+              -
+            </button>
+            <button
+              type="button"
+              phx-click="inc"
+              class="btn btn-accent btn-xs w-10">
+              +
+            </button>
           </div>
           <div>
             Räknare: <div class="badge badge-secondary"><%= @val %></div>
