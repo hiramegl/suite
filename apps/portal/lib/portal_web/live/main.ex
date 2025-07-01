@@ -31,7 +31,7 @@ defmodule PortalWeb.Main do
       |> assign(
         present: initial_present,
         counter_id: @counter_id,
-        service: "aku",
+        service: "dash",
         services: ["aku", "ulf"]
       )
     }

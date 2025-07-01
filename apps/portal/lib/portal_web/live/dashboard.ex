@@ -2,6 +2,7 @@ defmodule PortalWeb.Live.Dashboard do
   use Phoenix.Component
   import GenUi.Card
   import GenUi.Icon
+  import GenUi.Button
 
   attr :counter_id, :string, required: true
   def dashboard(assigns) do
@@ -9,26 +10,22 @@ defmodule PortalWeb.Live.Dashboard do
     <div>
       <div class="navbar sticky top-0">
         <div class="flex-1">
-          <button class="btn btn-primary text-xl">
-            <.icon name="hero-home-solid" class="w-5 h-5"/>
-            Hem
-          </button>
-          <button class="btn text-xl ml-2">
-            <.icon name="hero-calendar-days-solid" class="w-5 h-5"/>
-            Intervju schema
-          </button>
-          <button class="btn text-xl ml-2">
-            <.icon name="hero-rocket-launch-solid" class="w-5 h-5"/>
-            Semester
-          </button>
-          <button class="btn text-xl ml-2">
-            <.icon name="hero-presentation-chart-bar-solid" class="w-5 h-5"/>
-            Statistik
-          </button>
-          <button class="btn text-xl ml-2">
-            <.icon name="hero-newspaper-solid" class="w-5 h-5"/>
-            Rapporter
-          </button>
+          <.button
+            icon="hero-home-solid"
+            text="Hem"
+            selected={true}/>
+          <.button
+            icon="hero-calendar-days-solid"
+            text="Intervju schema"/>
+          <.button
+            icon="hero-rocket-launch-solid"
+            text="Semester"/>
+          <.button
+            icon="hero-presentation-chart-bar-solid"
+            text="Statistik"/>
+          <.button
+            icon="hero-newspaper-solid"
+            text="Rapporter"/>
         </div>
 
         <div class="flex-none">
