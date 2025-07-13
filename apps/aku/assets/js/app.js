@@ -25,6 +25,10 @@ import topbar from "../vendor/topbar"
 const service = "aku"
 const containerTag = `${service}-container`
 
+const showSvcs = document.
+  getElementById(containerTag).
+  my.showSvcs;
+
 let csrfToken = document.
   getElementById(containerTag).
   shadowRoot.
@@ -32,9 +36,16 @@ let csrfToken = document.
   getAttribute("content")
 let liveSocketAku = new LiveSocket(`/${service}/live`, Socket, {
   longPollFallbackMs: 2500,
-  params: {_csrf_token: csrfToken},
+  params: {
+    _csrf_token: csrfToken,
+    show_svcs: showSvcs
+  },
   rootSelector: containerTag,
 })
+
+document.
+  getElementById(containerTag).
+  setLiveSocket(liveSocketAku)
 
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
@@ -49,7 +60,3 @@ liveSocketAku.connect()
 // >> liveSocketAku.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocketAku.disableLatencySim()
 window.liveSocketAku = liveSocketAku
-
-document.
-  getElementById(containerTag).
-  setLiveSocket(liveSocketAku)

@@ -1,5 +1,6 @@
 defmodule GenUi.Card do
   use Phoenix.Component
+
   import GenUi.Icon
 
   attr :icon,  :string, required: true

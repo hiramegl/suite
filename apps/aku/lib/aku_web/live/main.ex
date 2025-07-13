@@ -7,7 +7,7 @@ defmodule AkuWeb.Main do
   @topic Count.topic
   @presence_topic "presence"
 
-  def mount(_params, _session, socket) do
+  def mount(params, _session, socket) do
     initial_present =
       if connected?(socket) do
         PubSub.subscribe(Aku.PubSub, @topic)
@@ -18,7 +18,27 @@ defmodule AkuWeb.Main do
       else
         0
       end
-    {:ok, assign(socket, val: Count.current(), present: initial_present)}
+
+    showSvcs = if socket |> get_connect_params == nil do
+      # no socket params means GET request, use request params
+      params
+        |> Map.get("show-svcs", "false")
+    else
+      # socket params exists, read value from socket params
+      socket
+        |> get_connect_params
+        |> Map.get("show_svcs", "false")
+    end
+
+    {
+      :ok,
+      socket
+      |> assign(
+        val: Count.current(),
+        present: initial_present,
+        show_svcs: showSvcs == "true"
+      )
+    }
   end
 
   def handle_event("inc", _, socket) do
@@ -27,6 +47,10 @@ defmodule AkuWeb.Main do
 
   def handle_event("dec", _, socket) do
     {:noreply, assign(socket, :val, Count.decr())}
+  end
+
+  def handle_event("show-svcs", %{"show-svcs" => val}, socket) do
+    {:noreply, assign(socket, :show_svcs, val == "true")}
   end
 
   def handle_info({:count, count}, socket) do
@@ -41,9 +65,15 @@ defmodule AkuWeb.Main do
     {:noreply, assign(socket, :present, new_present)}
   end
 
+  def body_class(false), do: "bg-base-100"
+  def body_class(true),  do: "bg-red-100"
+
+  def main_class(false), do: "bg-base-200"
+  def main_class(true),  do: "bg-red-200"
+
   def render(assigns) do
     ~H"""
-    <div class="navbar sticky top-0">
+    <div class={"navbar sticky top-0 #{@show_svcs |> body_class}"}>
       <div class="flex-1">
         <button class="btn btn-primary text-xl">
           <.icon name="hero-home-solid" class="w-5 h-5"/>
@@ -156,7 +186,7 @@ defmodule AkuWeb.Main do
       </div>
     </div>
 
-    <main class="flex-1 overflow-y-auto md:pt-4 pt-4 px-6 bg-base-200">
+    <main class={"flex-1 overflow-y-auto md:pt-4 pt-4 px-6 #{@show_svcs |> main_class}"}>
       <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
         <.live_component
           module={Card}

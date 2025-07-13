@@ -1,11 +1,15 @@
 customElements.define(
   "aku-main",
   class extends HTMLElement {
+    static observedAttributes = ["data-show-svcs"];
+
     constructor() {
       super()
       this.my = {} // used in order to separate from the other native attributes
       this.my.internals  = this.attachInternals()
       this.my.shadowRoot = this.attachShadow({mode: 'open'})
+      this.my.liveSocket = null
+      this.my.showSvcs   = "false"
     }
 
     reloadScript() {
@@ -25,7 +29,7 @@ customElements.define(
 
     connectedCallback() {
       console.log("aku-main connected")
-      fetch("/aku/").
+      fetch(`/aku/?show-svcs=${this.my.showSvcs}`).
         then(x => x.text()).
         then(x => {
           this.my.shadowRoot.innerHTML = x
@@ -52,6 +56,14 @@ customElements.define(
 
     attributeChangedCallback(name, oldValue, newValue) {
       console.log(`aku-main, Attribute ${name} has changed from ${oldValue} to ${newValue}.`)
+
+      if (this.my.showSvcs == newValue) return
+      this.my.showSvcs = newValue
+      if (this.my.liveSocket == null) return
+      this.my.liveSocket.execJSHookPush(
+        this.my.liveSocket.main.rootDoc.querySelector("main"),
+        "show-svcs",
+        {"show-svcs": this.my.showSvcs})
     }
 
     setLiveSocket(liveSocket) {

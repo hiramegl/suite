@@ -10,6 +10,7 @@ defmodule PortalWeb.Main do
     NavbarTools,
     Container,
     Dashboard,
+    UiUtils,
   }
 
   @presence_topic "presence"
@@ -25,14 +26,16 @@ defmodule PortalWeb.Main do
       else
         0
       end
+
     {
       :ok,
       socket
       |> assign(
         present: initial_present,
         counter_id: @counter_id,
-        service: "dash",
-        services: ["aku", "ulf"]
+        service: "aku",
+        services: ["aku", "ulf"],
+        show_svcs: false
       )
     }
   end
@@ -49,6 +52,17 @@ defmodule PortalWeb.Main do
     end
 
     {:noreply, socket}
+  end
+
+  def handle_event("toggle_show_svcs", _params, socket) do
+    {
+      :noreply,
+      socket
+      |> assign(
+        :show_svcs,
+        !socket.assigns.show_svcs
+      )
+    }
   end
 
   def handle_info({:count, count}, socket) do
@@ -74,24 +88,28 @@ defmodule PortalWeb.Main do
         <input id="left-sidebar-drawer" type="checkbox" class="drawer-toggle"/>
 
         <div class="drawer-content flex flex-col">
-          <div class="navbar sticky top-0 bg-base-100 z-10 shadow-md">
-            <.title title={get_title(@service)}/>
+          <div class={"navbar sticky top-0 z-10 shadow-md #{@show_svcs |> body_class}"}>
+            <.title title={@service |> get_title}/>
             <.navbar_tools/>
           </div>
 
           <!-- Main content -->
           <%= if @service == "dash" do %>
-          <.dashboard counter_id={@counter_id}/>
+          <.dashboard
+            counter_id={@counter_id}
+            show_svcs={@show_svcs}/>
           <% else %>
-          <.container service={@service}/>
+          <.container
+            service={@service}
+            show_svcs={@show_svcs}/>
           <% end %>
         </div>
 
-        <div class="drawer-side z-30">
+        <div class={"drawer-side z-30 #{@show_svcs |> body_class}"}>
           <label
             for="left-sidebar-drawer"
             class="drawer-overlay"></label>
-          <ul class="menu pt-2 w-60 bg-primary-100 min-h-full text-base-content">
+          <ul class="menu pt-2 w-60 bg-primary-100 h-full text-base-content">
             <.sidebar_top/>
 
             <.service_item
@@ -117,6 +135,18 @@ defmodule PortalWeb.Main do
                   <%= @present %>
                 </span>
               </span>
+            </li>
+            <li class="">
+                <span>
+                  Visa servicar
+                  <div></div>
+                  <input
+                    type="checkbox"
+                    id="show_service_toggle"
+                    class="toggle"
+                    phx-click="toggle_show_svcs"
+                    checked={@show_svcs}/>
+                </span>
             </li>
           </ul>
         </div>
