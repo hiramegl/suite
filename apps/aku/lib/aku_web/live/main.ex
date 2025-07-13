@@ -1,16 +1,14 @@
 defmodule AkuWeb.Main do
   use AkuWeb, :live_view
-  alias Aku.Count
-  alias Phoenix.PubSub
+
   alias Aku.Presence
 
-  @topic Count.topic
   @presence_topic "presence"
+  @counter_id "the_counter"
 
   def mount(params, _session, socket) do
     initial_present =
       if connected?(socket) do
-        PubSub.subscribe(Aku.PubSub, @topic)
         Presence.track(self(), @presence_topic, socket.id, %{})
         AkuWeb.Endpoint.subscribe(@presence_topic)
         Presence.list(@presence_topic)
@@ -34,27 +32,20 @@ defmodule AkuWeb.Main do
       :ok,
       socket
       |> assign(
-        val: Count.current(),
         present: initial_present,
+        counter_id: @counter_id,
         show_svcs: showSvcs == "true"
       )
     }
   end
 
-  def handle_event("inc", _, socket) do
-    {:noreply, assign(socket, :val, Count.incr())}
-  end
-
-  def handle_event("dec", _, socket) do
-    {:noreply, assign(socket, :val, Count.decr())}
-  end
-
-  def handle_event("show-svcs", %{"show-svcs" => val}, socket) do
-    {:noreply, assign(socket, :show_svcs, val == "true")}
+  def handle_event("show-svcs", %{"show-svcs" => showSvcs}, socket) do
+    {:noreply, assign(socket, :show_svcs, showSvcs == "true")}
   end
 
   def handle_info({:count, count}, socket) do
-    {:noreply, assign(socket, val: count)}
+    send_update AkuWeb.Counter, id: @counter_id, count: count
+    {:noreply, socket}
   end
 
   def handle_info(
@@ -222,23 +213,9 @@ defmodule AkuWeb.Main do
             Delade data
           </div>
           <div class="divider mt-1"></div>
-          <div class="mb-2">
-            <button
-              type="button"
-              phx-click="dec"
-              class="btn btn-primary btn-xs w-10">
-              -
-            </button>
-            <button
-              type="button"
-              phx-click="inc"
-              class="btn btn-accent btn-xs w-10">
-              +
-            </button>
-          </div>
-          <div>
-            Räknare: <div class="badge badge-secondary"><%= @val %></div>
-          </div>
+          <.live_component
+            module={AkuWeb.Counter}
+            id={@counter_id}/>
           <div>
             Antal anslutna: <span class="badge badge-accent"><%= @present %></span>
           </div>
