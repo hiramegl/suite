@@ -9,6 +9,7 @@ defmodule PortalWeb.Live.Dashboard do
 
   attr :counter_id, :string, required: true
   attr :show_svcs,  :boolean, required: true
+
   def dashboard(assigns) do
     ~H"""
     <div>
@@ -74,6 +75,7 @@ defmodule PortalWeb.Live.Dashboard do
           </button>
         </div>
       </div>
+
       <main class={"flex-1 overflow-y-auto md:pt-4 pt-4 px-6 #{@show_svcs |> main_class}"}>
         <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
           <.card

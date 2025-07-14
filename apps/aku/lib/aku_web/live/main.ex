@@ -3,6 +3,11 @@ defmodule AkuWeb.Main do
 
   alias Aku.Presence
 
+  import AkuWeb.Live.{
+    Toolbar,
+    Home,
+  }
+
   @presence_topic "presence"
   @counter_id "the_counter"
 
@@ -56,212 +61,18 @@ defmodule AkuWeb.Main do
     {:noreply, assign(socket, :present, new_present)}
   end
 
-  def body_class(false), do: "bg-base-100"
-  def body_class(true),  do: "bg-red-100"
-
   def main_class(false), do: "bg-base-200"
   def main_class(true),  do: "bg-red-200"
 
   def render(assigns) do
     ~H"""
-    <div class={"navbar sticky top-0 #{@show_svcs |> body_class}"}>
-      <div class="flex-1">
-        <button class="btn btn-primary text-xl">
-          <.icon name="hero-home-solid" class="w-5 h-5"/>
-          Hem
-        </button>
-        <div class="dropdown ml-1">
-          <div tabindex="0" role="button" class="btn m-1 text-xl">
-            <.icon name="hero-calendar-solid" class="w-5 h-5"/>
-            2025-Q1
-          </div>
-          <ul
-            tabindex="0"
-            class="dropdown-content menu bg-base-100 rounded-box z-200 w-52 p-2 shadow">
-            <li><a>2026</a></li>
-            <li>
-              <details open>
-                <summary>2025</summary>
-                <ul>
-                  <li>
-                    <details open>
-                      <summary>Q1</summary>
-                      <ul>
-                        <li><a>Jan</a></li>
-                        <li><a>Feb</a></li>
-                        <li><a>Mar</a></li>
-                      </ul>
-                    </details>
-                  </li>
-                  <li><a>Q2</a></li>
-                  <li><a>Q3</a></li>
-                </ul>
-              </details>
-            </li>
-            <li><a>2024</a></li>
-            <li><a>2023</a></li>
-            <li>
-              <a>
-                <.icon name="hero-archive-box-solid" class="w-5 h-5"/>
-                Arkiv
-              </a>
-            </li>
-          </ul>
-        </div>
-        <button class="btn text-xl ml-2">
-          <.icon name="hero-calendar-days-solid" class="w-5 h-5"/>
-          Planering
-        </button>
-        <button class="btn text-xl ml-2">
-          <.icon name="hero-inbox-arrow-down-solid" class="w-5 h-5"/>
-          Insamling
-        </button>
-        <button class="btn text-xl ml-2">
-          <.icon name="hero-square-3-stack-3d-solid" class="w-5 h-5"/>
-          Bearbetning
-        </button>
-        <button class="btn text-xl ml-2">
-          <.icon name="hero-presentation-chart-bar-solid" class="w-5 h-5"/>
-          Analys
-        </button>
-        <button class="btn text-xl ml-2">
-          <.icon name="hero-newspaper-solid" class="w-5 h-5"/>
-          Rapportering
-        </button>
-        <button class="btn text-xl ml-2">
-          <.icon name="hero-scale-solid" class="w-5 h-5"/>
-          Utvärdering
-        </button>
-      </div>
+    <.toolbar show_svcs={@show_svcs}/>
 
-      <div class="flex-none">
-        <button class="btn text-xl">
-          <.icon name="hero-wrench-screwdriver-solid" class="w-5 h-5"/>
-        </button>
-        <button class="btn text-xl ml-2">
-          <.icon name="hero-chat-bubble-left-right-solid" class="w-5 h-5"/>
-        </button>
-        <button class="btn dropdown dropdown-end ml-2">
-          <.icon
-            name="hero-bars-4-solid"
-            class="w-5"/>
-          <ul
-            tabindex="0"
-            class="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-box w-52 z-20">
-            <li>
-              <a>
-                <.icon name="hero-question-mark-circle-solid" class="w-5"/>
-                Hjälp
-              </a>
-            </li>
-            <li>
-              <a>
-                <.icon name="hero-envelope-solid" class="w-5"/>
-                Meddelande
-              </a>
-            </li>
-            <li>
-              <a>
-                <.icon name="hero-exclamation-triangle-solid" class="w-5"/>
-                Skapa ett ärende
-              </a>
-            </li>
-            <li>
-              <a>
-                <.icon name="hero-cog-6-tooth-solid" class="w-5"/>
-                Inställningar
-              </a>
-            </li>
-          </ul>
-        </button>
-      </div>
-    </div>
-
-    <main class={"flex-1 overflow-y-auto md:pt-4 pt-4 px-6 #{@show_svcs |> main_class}"}>
-      <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
-        <.live_component
-          module={Card}
-          id="card_1_1"
-          icon="square-3-stack-3d"
-          title="Bearbetning 2025-Q1"/>
-        <.live_component
-          module={Card}
-          id="card_1_2"
-          icon="calendar-days"
-          title="Planering 2025-Q4"/>
-        <.live_component
-          module={Card}
-          id="card_1_3"
-          icon="square-3-stack-3d"
-          title="Bearbetning 2024-Q3"/>
-        <div class="bg-white rounded-xl h-80 w-full p-6 shadow-xl mt-2 -z-9">
-          <div class="text-xl font-semibold">
-            <.icon name="hero-presentation-chart-bar-solid" class="w-5 h-5 mr-1"/>
-            Analys 2024-Q4
-          </div>
-          <div class="divider mt-1"></div>
-          <img
-            src="/aku/images/chart01.jpg"
-            class="h-52 ml-12"/>
-        </div>
-      </div>
-
-      <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
-        <div class="bg-white rounded-xl h-80 w-full p-6 shadow-xl mt-2 -z-9">
-          <div class="text-xl font-semibold">
-            <.icon name="hero-circle-stack-solid" class="w-5 h-5 mr-1"/>
-            Delade data
-          </div>
-          <div class="divider mt-1"></div>
-          <.live_component
-            module={AkuWeb.Counter}
-            id={@counter_id}/>
-          <div>
-            Antal anslutna: <span class="badge badge-accent"><%= @present %></span>
-          </div>
-        </div>
-        <.live_component
-          module={Card}
-          id="card_2_2"
-          icon="square-3-stack-3d"
-          title="Bearbetning 2024-Q4"/>
-        <.live_component
-          module={Card}
-          id="card_2_3"
-          icon="presentation-chart-bar"
-          title="Analys 2025-Q1"/>
-        <.live_component
-          module={Card}
-          class="bg-red-50"
-          id="card_2_4"
-          icon="envelope"
-          title="Viktiga meddelande"/>
-      </div>
-
-      <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
-        <.live_component
-          module={Card}
-          class="bg-teal-50"
-          id="card_3_1"
-          icon="chat-bubble-left-right"
-          title="Konversation med Sven"/>
-        <.live_component
-          module={Card}
-          id="card_3_2"
-          icon="square-3-stack-3d"
-          title="Bearbetning 2024-Q1"/>
-        <.live_component
-          module={Card}
-          id="card_3_3"
-          icon="presentation-chart-bar"
-          title="Analys 2024-Q3"/>
-        <.live_component
-          module={Card}
-          id="card_3_4"
-          icon="calendar-days"
-          title="Planering 2025-Q3"/>
-      </div>
-
+    <main
+     class={"flex-1 overflow-y-auto md:pt-4 pt-4 px-6 #{@show_svcs |> main_class}"}>
+      <.home
+        counter_id={@counter_id}
+        present={@present}/>
       <div class="h-16"></div>
     </main>
     """

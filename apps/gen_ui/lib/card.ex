@@ -6,6 +6,7 @@ defmodule GenUi.Card do
   attr :icon,  :string, required: true
   attr :title, :string, required: true
   attr :class, :string, default: "bg-base-100"
+
   def card(assigns) do
     ~H"""
     <div class={"rounded-xl h-80 w-full p-6 #{@class} shadow-xl mt-2 -z-9"}>

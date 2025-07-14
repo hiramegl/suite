@@ -3,7 +3,7 @@ defmodule GenUi.Button do
   import GenUi.Icon
 
   attr :icon,     :string, required: true
-  attr :text,     :string, required: true
+  attr :text,     :string, default: ""
   attr :selected, :boolean, default: false
   def button(assigns) do
     ~H"""
