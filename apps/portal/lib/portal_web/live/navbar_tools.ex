@@ -38,16 +38,12 @@ defmodule PortalWeb.Live.NavbarTools do
             class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-100">
             <li class="justify-between">
               <a href="/app/settings-profile">Profile Settings
-                <span class="badge">New</span>
+                <span class="badge badge-primary">New</span>
               </a>
-            </li>
-            <li class="">
-              <a href="/app/settings-billing">Bill History</a>
             </li>
             <div class="divider mt-0 mb-0"></div>
             <li>
               <a>Logout</a>
-              <span>{working()}</span>
             </li>
           </ul>
         </div>
