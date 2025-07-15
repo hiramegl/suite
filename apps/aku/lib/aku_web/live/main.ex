@@ -1,12 +1,12 @@
 defmodule AkuWeb.Main do
   use AkuWeb, :live_view
 
-  alias Aku.Presence
-
   import AkuWeb.Live.{
     Toolbar,
     Home,
   }
+
+  alias Aku.Presence
 
   @presence_topic "presence"
   @counter_id "the_counter"

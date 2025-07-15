@@ -1,8 +1,9 @@
 defmodule Aku.Count do
   use GenServer
-  alias Phoenix.PubSub
-  @name :count_server
 
+  alias Phoenix.PubSub
+
+  @name :count_server
   @start_value 0
 
   # External API (runs in client process)
