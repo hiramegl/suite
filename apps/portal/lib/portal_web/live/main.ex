@@ -16,6 +16,10 @@ defmodule PortalWeb.Main do
   @presence_topic "presence"
   @counter_id "the_counter"
 
+  # will be read from db:
+  @dash_title "Min dashboard 🎛️"
+  @dash_alert "Du fick ett meddelande från Erik"
+
   def mount(_params, _session, socket) do
     initial_present =
       if connected?(socket) do
@@ -33,9 +37,12 @@ defmodule PortalWeb.Main do
       |> assign(
         present: initial_present,
         counter_id: @counter_id,
-        service: "aku",
         services: ["aku", "ulf"],
-        show_svcs: false
+        show_svcs: false,
+
+        service: "dash",
+        title: @dash_title,
+        alert: @dash_alert
       )
     }
   end
@@ -45,8 +52,15 @@ defmodule PortalWeb.Main do
     old_svc = socket.assigns.service
 
     socket = if new_svc != old_svc do
-      socket
-      |> assign(service: new_svc)
+      if new_svc == "dash" do
+        socket
+        |> assign(service: new_svc)
+        |> assign(title: @dash_title)
+        |> assign(alert: @dash_alert)
+      else
+        socket
+        |> assign(service: new_svc)
+      end
     else
       socket
     end
@@ -65,6 +79,23 @@ defmodule PortalWeb.Main do
     }
   end
 
+  def handle_event(
+    "service-init", %{
+      "id" => _id,
+      "name" => _name,
+      "title" => title,
+      "alert" => alert,
+    } = init_data,
+    socket) do
+    IO.puts("---> Init data: #{init_data |> inspect}")
+    {
+      :noreply,
+      socket
+      |> assign(:title, title)
+      |> assign(:alert, alert)
+    }
+  end
+
   def handle_info({:count, count}, socket) do
     send_update PortalWeb.Counter, id: @counter_id, count: count
     {:noreply, socket}
@@ -78,10 +109,6 @@ defmodule PortalWeb.Main do
     {:noreply, assign(socket, :present, new_present)}
   end
 
-  def get_title("dash"), do: "Min dashboard"
-  def get_title("aku"),  do: "AKU - Arbetskraftsundersökning"
-  def get_title("ulf"),  do: "ULF - Undersökning av levnadsförhållanden"
-
   def render(assigns) do
     ~H"""
       <div class="drawer lg:drawer-open">
@@ -89,8 +116,8 @@ defmodule PortalWeb.Main do
 
         <div class="drawer-content flex flex-col">
           <div class={"navbar sticky top-0 z-10 shadow-md #{@show_svcs |> body_class}"}>
-            <.title title={@service |> get_title}/>
-            <.navbar_tools/>
+            <.title title={@title}/>
+            <.navbar_tools alert={@alert}/>
           </div>
 
           <!-- Main content -->

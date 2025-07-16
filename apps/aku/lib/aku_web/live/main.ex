@@ -64,6 +64,16 @@ defmodule AkuWeb.Main do
   def main_class(false), do: "bg-base-200"
   def main_class(true),  do: "bg-red-200"
 
+  def init_message() do
+    %{
+      "id" => "aku",
+      "name" => "Arbetskraftsundersökningar",
+      "title" => "AKU - Arbetskraftsundersökningar",
+      "alert" => "Månadens insamling börjar nästa vecka",
+    }
+    |> JSON.encode!
+  end
+
   def render(assigns) do
     ~H"""
     <.toolbar show_svcs={@show_svcs}/>
@@ -75,6 +85,8 @@ defmodule AkuWeb.Main do
         present={@present}/>
       <div class="h-16"></div>
     </main>
+
+    <portal-messenger message={init_message()}/>
     """
   end
 end

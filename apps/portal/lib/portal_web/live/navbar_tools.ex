@@ -2,14 +2,12 @@ defmodule PortalWeb.Live.NavbarTools do
   use Phoenix.LiveComponent
   import PortalWeb.CoreComponents, only: [icon: 1]
 
-  def working() do
-    "#{GenUi.hello()} / #{GenLib.hello()}"
-  end
+  attr :alert, :string, required: true
 
   def navbar_tools(assigns) do
     ~H"""
       <div class="flex-none">
-        <div class="badge badge-primary badge-outline">Insamlingsomgång börjar nästa vecka</div>
+        <div class="badge badge-primary badge-outline">{@alert}</div>
         <button class="btn btn-ghost btn-circle">
           <div class="indicator">
             <.icon name="hero-bell-solid" class="h-6 w-6"/>
