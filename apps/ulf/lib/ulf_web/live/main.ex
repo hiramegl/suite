@@ -12,26 +12,13 @@ defmodule UlfWeb.Main do
   @counter_id "the_counter"
 
   def mount(params, _session, socket) do
-    initial_present =
-      if connected?(socket) do
-        Presence.track(self(), @presence_topic, socket.id, %{})
-        UlfWeb.Endpoint.subscribe(@presence_topic)
-        Presence.list(@presence_topic)
-        |> map_size
-      else
-        0
-      end
-
-    showSvcs = if socket |> get_connect_params == nil do
-      # no socket params means GET request, use request params
-      params
-        |> Map.get("show-svcs", "false")
-    else
-      # socket params exists, read value from socket params
-      socket
-        |> get_connect_params
-        |> Map.get("show_svcs", "false")
-    end
+    initial_present = socket
+      |> GenLib.get_present(
+        Presence,
+        UlfWeb.Endpoint,
+        @presence_topic)
+    show_svcs = socket
+      |> GenLib.get_show_svcs(params)
 
     {
       :ok,
@@ -39,13 +26,13 @@ defmodule UlfWeb.Main do
       |> assign(
         present: initial_present,
         counter_id: @counter_id,
-        show_svcs: showSvcs == "true"
+        show_svcs: show_svcs
       )
     }
   end
 
-  def handle_event("show-svcs", %{"show-svcs" => showSvcs}, socket) do
-    {:noreply, assign(socket, :show_svcs, showSvcs == "true")}
+  def handle_event("show-svcs", %{"show-svcs" => show_svcs}, socket) do
+    {:noreply, assign(socket, :show_svcs, show_svcs == "true")}
   end
 
   def handle_info({:count, count}, socket) do
@@ -66,8 +53,6 @@ defmodule UlfWeb.Main do
 
   def init_message() do
     %{
-      "id" => "ulf",
-      "name" => "Undersökning av levnadsförhållanden",
       "title" => "ULF - Undersökning av levnadsförhållanden",
       "alert" => "Urvalet godkäns på fredag",
     }

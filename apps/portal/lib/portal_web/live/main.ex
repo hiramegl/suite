@@ -81,13 +81,10 @@ defmodule PortalWeb.Main do
 
   def handle_event(
     "service-init", %{
-      "id" => _id,
-      "name" => _name,
       "title" => title,
       "alert" => alert,
-    } = init_data,
+    },
     socket) do
-    IO.puts("---> Init data: #{init_data |> inspect}")
     {
       :noreply,
       socket
