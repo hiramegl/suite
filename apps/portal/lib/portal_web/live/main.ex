@@ -17,7 +17,7 @@ defmodule PortalWeb.Main do
   @counter_id "the_counter"
 
   # will be read from db:
-  @dash_title "Min dashboard 🎛️"
+  @dash_title "️💻 Min dashboard"
   @dash_alert "Du fick ett meddelande från Erik"
 
   def mount(_params, _session, socket) do
@@ -41,13 +41,19 @@ defmodule PortalWeb.Main do
         show_svcs: false,
 
         service: "dash",
+        dash_view: "home",
         title: @dash_title,
         alert: @dash_alert
       )
     }
   end
 
-  def handle_event("svc_change", params, socket) do
+  # handle event ***************************************************************
+
+  def handle_event(
+    "svc_change",
+    params,
+    socket) do
     new_svc = params |> Map.get("service")
     old_svc = socket.assigns.service
 
@@ -68,7 +74,10 @@ defmodule PortalWeb.Main do
     {:noreply, socket}
   end
 
-  def handle_event("toggle_show_svcs", _params, socket) do
+  def handle_event(
+    "toggle_show_svcs",
+    _params,
+    socket) do
     {
       :noreply,
       socket
@@ -80,7 +89,8 @@ defmodule PortalWeb.Main do
   end
 
   def handle_event(
-    "service-init", %{
+    "service-init",
+    %{
       "title" => title,
       "alert" => alert,
     },
@@ -92,6 +102,22 @@ defmodule PortalWeb.Main do
       |> assign(:alert, alert)
     }
   end
+
+  def handle_event(
+    "view_selected",
+    %{
+      "value" => _value,
+      "view"  => view
+    },
+    socket) do
+    {
+      :noreply,
+      socket
+      |> assign(:dash_view, view)
+    }
+  end
+
+  # handle info ****************************************************************
 
   def handle_info({:count, count}, socket) do
     send_update PortalWeb.Counter, id: @counter_id, count: count
@@ -120,6 +146,7 @@ defmodule PortalWeb.Main do
           <!-- Main content -->
           <%= if @service == "dash" do %>
           <.dashboard
+            dash_view={@dash_view}
             counter_id={@counter_id}
             show_svcs={@show_svcs}/>
           <% else %>

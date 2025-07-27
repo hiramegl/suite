@@ -54,7 +54,7 @@ defmodule UlfWeb.Main do
   def init_message() do
     %{
       "title" => "ULF - Undersökning av levnadsförhållanden",
-      "alert" => "Urvalet godkäns på fredag",
+      "alert" => "Urvalet kontrolleras på fredag",
     }
     |> JSON.encode!
   end

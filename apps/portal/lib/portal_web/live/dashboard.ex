@@ -1,13 +1,20 @@
 defmodule PortalWeb.Live.Dashboard do
   use Phoenix.Component
 
-  import GenUi.Card
   import GenUi.Icon
   import GenUi.Button
 
-  import PortalWeb.Live.UiUtils
+  import PortalWeb.Live.{
+    UiUtils,
+    Home,
+    Schema,
+    Vacations,
+    Links,
+    Reports,
+  }
 
-  attr :counter_id, :string, required: true
+  attr :dash_view,  :string,  required: true
+  attr :counter_id, :string,  required: true
   attr :show_svcs,  :boolean, required: true
 
   def dashboard(assigns) do
@@ -18,19 +25,33 @@ defmodule PortalWeb.Live.Dashboard do
           <.button
             icon="hero-home-solid"
             text="Hem"
-            selected={true}/>
+            selected={@dash_view == "home"}
+            phx-click="view_selected"
+            phx-value-view="home"/>
           <.button
             icon="hero-calendar-days-solid"
-            text="Intervju schema"/>
+            text="Intervju schema"
+            selected={@dash_view == "schema"}
+            phx-click="view_selected"
+            phx-value-view="schema"/>
           <.button
             icon="hero-rocket-launch-solid"
-            text="Semester"/>
+            text="Semester"
+            selected={@dash_view == "vacations"}
+            phx-click="view_selected"
+            phx-value-view="vacations"/>
           <.button
-            icon="hero-presentation-chart-bar-solid"
-            text="Statistik"/>
+            icon="hero-link"
+            text="Mina länkar"
+            selected={@dash_view == "links"}
+            phx-click="view_selected"
+            phx-value-view="links"/>
           <.button
             icon="hero-newspaper-solid"
-            text="Rapporter"/>
+            text="Rapporter"
+            selected={@dash_view == "reports"}
+            phx-click="view_selected"
+            phx-value-view="reports"/>
         </div>
 
         <div class="flex-none">
@@ -77,24 +98,25 @@ defmodule PortalWeb.Live.Dashboard do
       </div>
 
       <main class={"flex-1 overflow-y-auto md:pt-4 pt-4 px-6 #{@show_svcs |> main_class}"}>
-        <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
-          <.card
-            icon="hero-square-3-stack-3d-solid"
-            title="Bearbetning 2025-Q1"/>
-          <div class="bg-white rounded-xl h-80 w-full p-6 shadow-xl mt-2 -z-9">
-            <div class="text-xl font-semibold">
-              <.icon name="hero-circle-stack-solid" class="w-5 h-5 mr-1"/>
-              Delade data
-            </div>
-            <div class="divider mt-1"></div>
-            <.live_component
-              module={PortalWeb.Counter}
-              id={@counter_id}/>
-          </div>
-        </div>
+        <%= if @dash_view == "home" do %>
+          <.home counter_id={@counter_id}/>
+        <% end %>
+        <%= if @dash_view == "schema" do %>
+          <.schema/>
+        <% end %>
+        <%= if @dash_view == "vacations" do %>
+          <.vacations/>
+        <% end %>
+        <%= if @dash_view == "links" do %>
+          <.links/>
+        <% end %>
+        <%= if @dash_view == "reports" do %>
+          <.reports/>
+        <% end %>
 
         <div class="h-16"></div>
       </main>
+
       <div
         id="stop-dispatcher"
         phx-hook="StopDispatcher">
