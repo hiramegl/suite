@@ -28,6 +28,10 @@ defmodule GenLib.MixProject do
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
       # {:sibling_app_in_umbrella, in_umbrella: true}
+      {:phoenix_live_view,
+       github: "hiramegl/phoenix_live_view",
+       branch: "1_0_17_ufes",
+       override: true}, # override dependency in phoenix_live_dashboard
     ]
   end
 end

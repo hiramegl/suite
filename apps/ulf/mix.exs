@@ -44,13 +44,13 @@ defmodule Ulf.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload,
-       git: "/Users/hiram/Projects/web/suite/custom/phoenix_live_reload",
-       branch: "hiram",
+       github: "hiramegl/phoenix_live_reload",
+       branch: "1_6_0_ufes",
        only: :dev,
        override: true}, # override dependency in phoenix_live_dashboard
       {:phoenix_live_view,
-       git: "/Users/hiram/Projects/web/suite/custom/phoenix_live_view",
-       branch: "hiram_1_0_17",
+       github: "hiramegl/phoenix_live_view",
+       branch: "1_0_17_ufes",
        override: true}, # override dependency in phoenix_live_dashboard
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
