@@ -61,7 +61,7 @@ window.addEventListener(
   (e) => {
     liveSocket.execJSHookPush(
       liveSocket.main.rootDoc.querySelector("main"),
-      "service-init",
+      "service_init",
       e.detail)
   }
 )

@@ -8,11 +8,14 @@ defmodule PortalWeb.Live.NavbarTools do
     ~H"""
       <div class="flex-none">
         <div class="badge badge-primary badge-outline">{@alert}</div>
-        <button class="btn btn-ghost btn-circle">
+        <button
+          class="btn btn-ghost btn-circle"
+          phx-click="toggle_alerts"
+          phx-value-show-alerts="true">
           <div class="indicator">
             <.icon name="hero-bell-solid" class="h-6 w-6"/>
             <span class="indicator-item badge badge-secondary badge-sm">
-              12
+              3
             </span>
           </div>
         </button>
@@ -26,9 +29,13 @@ defmodule PortalWeb.Live.NavbarTools do
           </div>
         </div>
         <div class="dropdown dropdown-end ml-2">
-          <div tabindex="0" class="btn btn-ghost btn-circle avatar">
+          <div
+            tabindex="0"
+            class="btn btn-ghost btn-circle avatar">
             <div class="w-10 rounded-full">
-              <img src="/images/profile.jpg" alt="profile">
+              <img
+                src="/images/profile.jpg"
+                alt="profile">
             </div>
           </div>
           <ul

@@ -1,8 +1,6 @@
 defmodule PortalWeb.Live.Title do
   use Phoenix.Component
 
-  import GenUi.Icon
-
   alias Phoenix.LiveView.JS
 
   def show_sidebar(js \\ %JS{}) do
@@ -14,6 +12,7 @@ defmodule PortalWeb.Live.Title do
   end
 
   attr :title, :string, required: true
+
   def title(assigns) do
     ~H"""
     <div class="flex-1">

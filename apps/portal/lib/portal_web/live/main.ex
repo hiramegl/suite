@@ -11,6 +11,7 @@ defmodule PortalWeb.Main do
     Container,
     Dashboard,
     UiUtils,
+    Alerts,
   }
 
   @presence_topic "presence"
@@ -39,6 +40,7 @@ defmodule PortalWeb.Main do
         counter_id: @counter_id,
         services: ["aku", "ulf"],
         show_svcs: false,
+        show_alerts: false,
 
         service: "dash",
         dash_view: "home",
@@ -75,7 +77,7 @@ defmodule PortalWeb.Main do
   end
 
   def handle_event(
-    "toggle_show_svcs",
+    "toggle_show_svcs", # elixir event
     _params,
     socket) do
     {
@@ -89,7 +91,34 @@ defmodule PortalWeb.Main do
   end
 
   def handle_event(
-    "service-init",
+    "view_selected", # elixir event
+    %{
+      "value" => _value,
+      "view"  => view
+    },
+    socket) do
+    {
+      :noreply,
+      socket
+      |> assign(:dash_view, view)
+    }
+  end
+
+  def handle_event(
+    "toggle_alerts", # elixir event
+    %{
+      "show-alerts" => show_alerts
+    },
+    socket) do
+    {
+      :noreply,
+      socket
+      |> assign(:show_alerts, show_alerts == "true")
+    }
+  end
+
+  def handle_event(
+    "service_init", # javascript event
     %{
       "title" => title,
       "alert" => alert,
@@ -100,20 +129,6 @@ defmodule PortalWeb.Main do
       socket
       |> assign(:title, title)
       |> assign(:alert, alert)
-    }
-  end
-
-  def handle_event(
-    "view_selected",
-    %{
-      "value" => _value,
-      "view"  => view
-    },
-    socket) do
-    {
-      :noreply,
-      socket
-      |> assign(:dash_view, view)
     }
   end
 
@@ -209,6 +224,10 @@ defmodule PortalWeb.Main do
           </ul>
         </div>
       </div>
+
+      <.alerts
+        show_svcs={@show_svcs}
+        show_alerts={@show_alerts}/>
     """
   end
 end
