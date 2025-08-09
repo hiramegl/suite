@@ -134,8 +134,13 @@ defmodule PortalWeb.Main do
 
   def render(assigns) do
     ~H"""
-      <div class="drawer lg:drawer-open">
-        <input id="left-sidebar-drawer" type="checkbox" class="drawer-toggle"/>
+      <div
+        id="main-viewport"
+        class="drawer lg:drawer-open">
+        <input
+          id="left-sidebar"
+          type="checkbox"
+          class="drawer-toggle"/>
 
         <div class="drawer-content flex flex-col">
           <div class={"navbar sticky top-0 z-10 shadow-md #{@show_svcs |> body_class}"}>
@@ -156,9 +161,11 @@ defmodule PortalWeb.Main do
           <% end %>
         </div>
 
-        <div class={"drawer-side z-30 #{@show_svcs |> body_class}"}>
+        <div
+          id="sidebar"
+          class={"drawer-side z-30 #{@show_svcs |> body_class}"}>
           <label
-            for="left-sidebar-drawer"
+            for="left-sidebar"
             class="drawer-overlay"></label>
           <ul class="menu pt-2 w-60 bg-primary-100 h-full text-base-content">
             <.sidebar_top/>
@@ -194,7 +201,7 @@ defmodule PortalWeb.Main do
                   <input
                     type="checkbox"
                     id="show_service_toggle"
-                    class="toggle"
+                    class={"toggle #{if @show_svcs, do: "bg-green-500"}"}
                     phx-click="toggle_show_svcs"
                     checked={@show_svcs}/>
                 </span>
