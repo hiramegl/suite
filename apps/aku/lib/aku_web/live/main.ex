@@ -63,13 +63,13 @@ defmodule AkuWeb.Main do
     ~H"""
     <.toolbar show_svcs={@show_svcs}/>
 
-    <main
-     class={"flex-1 overflow-y-auto md:pt-4 pt-4 px-6 #{@show_svcs |> main_class}"}>
+    <div
+      class={"flex-1 overflow-y-auto md:pt-4 pt-4 px-6 #{@show_svcs |> main_class}"}>
       <.home
         counter_id={@counter_id}
         present={@present}/>
       <div class="h-16"></div>
-    </main>
+    </div>
 
     <portal-messenger message={init_message()}/>
     """

@@ -20,7 +20,7 @@ defmodule AkuWeb.Live.Home do
         <.card
           icon="hero-square-3-stack-3d"
           title="Bearbetning 2024-Q3"/>
-        <div class="bg-white rounded-xl h-80 w-full p-6 shadow-xl mt-2 -z-9">
+        <div class="bg-white rounded-xl h-80 w-full p-6 shadow-xl mt-2">
           <div class="text-xl font-semibold">
             <.icon
               name="hero-presentation-chart-bar-solid"
@@ -35,7 +35,7 @@ defmodule AkuWeb.Live.Home do
       </div>
 
       <div class="grid lg:grid-cols-4 grid-cols-1 gap-6">
-        <div class="bg-white rounded-xl h-80 w-full p-6 shadow-xl mt-2 -z-9">
+        <div class="bg-white rounded-xl h-80 w-full p-6 shadow-xl mt-2">
           <div class="text-xl font-semibold">
             <.icon name="hero-circle-stack-solid" class="w-5 h-5 mr-1"/>
             Delade data
